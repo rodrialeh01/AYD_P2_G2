@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_KEY);
 export const signUp = async (req, res) => {
     
     try {
-        const { name, lastName, phone, email, birthDate, password } = req.body;
+        const { name, lastName, phone, email, birthDate, password, role } = req.body;
 
         //Verificar si el usuario ya esta registrado
         
@@ -18,8 +18,10 @@ export const signUp = async (req, res) => {
         }
 
         //Verificar que todos los campos esten llenos
+
+        console.log(name, lastName, phone, email, birthDate, password, role);
         
-        if (!name || !lastName || !phone || !email || !birthDate || !password) {
+        if (!name || !lastName || !phone || !email || !birthDate || !password || !role) {
             res.response(null, 'All fields are required', 400);
             return;
         }
@@ -39,7 +41,7 @@ export const signUp = async (req, res) => {
             password,
             verified: 0,
             code,
-            role: 0
+            role
         });
 
         // Enviar correo de verificacion
@@ -58,9 +60,8 @@ export const signUp = async (req, res) => {
 
 
         newUser.password = await newUser.encryptPassword(newUser.password);
+        newUser.code = await newUser.encryptPassword(newUser.code);
         await newUser.save();
-
-        
 
         res.response(null, 'User created successfully', 200);
 
@@ -104,7 +105,9 @@ export const signInPassword = async (req, res) => {
         }else{
             //Intentar iniciar sesion con el codigo de primer inicio de sesion
             //Code es el password en este caso
-            if (password !== isRegistered.code) {
+            const isCodeValid = await isRegistered.validatePassword(password, isRegistered.code);
+
+            if (!isCodeValid) {
                 res.response(null, 'Invalid code', 400);
                 return;
             }
