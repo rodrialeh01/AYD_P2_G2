@@ -9,8 +9,8 @@ const userSchema = new Schema({
     password: String,
     birthDate: String,
     role: Number,
-    rentedBooks: Array,
-    purchasedBooks: Array
+    verified: Number,
+    code: String
 });
 
 userSchema.methods.encryptPassword = async (password) => {
@@ -21,5 +21,7 @@ userSchema.methods.encryptPassword = async (password) => {
 userSchema.methods.validatePassword = async (password, passwordDB) => {
     return bcrypt.compare(password, passwordDB);
 };
+
+
 
 export const User = model('users', userSchema);
