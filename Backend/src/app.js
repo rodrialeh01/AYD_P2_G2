@@ -1,7 +1,6 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { API_PORT } from "./config/credentials.js";
 import { connect } from "./db/dbConnection.js";
 import responseMiddleware from "./middlewares/response.js";
 import testHandler from "./routes/test.routes.js";
@@ -11,6 +10,7 @@ import error404Handler from "./routes/404.routes.js";
 import bookHandler from "./routes/book.routes.js";
 import commentHandler from "./routes/comment.routes.js";
 import historyHandler from "./routes/history.routes.js";
+import petHandler from "./routes/pet.routes.js";
 
 const app = express();
 
@@ -28,6 +28,7 @@ app.use("/user", userHandler);
 app.use("/book", bookHandler);
 app.use("/comment", commentHandler);
 app.use("/history", historyHandler);
+app.use("/pet", petHandler);
 app.use(error404Handler);
 
 export default app;
