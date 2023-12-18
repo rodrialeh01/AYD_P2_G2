@@ -1,3 +1,4 @@
+import  Pets  from '../db/models/pet.model.js';
 import { User } from '../db/models/user.model.js';
 
 export const getUser = async (req, res) => {
@@ -63,11 +64,9 @@ export const getPets = async (req, res) => {
     try{
         const { id } = req.params;
 
-        const booksUser = await User.findOne({ _id:id }, { rentedBooks: 1, purchasedBooks: 1 });
-        const rentedBooks = await Book.find({ _id: { $in: booksUser.rentedBooks } }, { __v: 0 });
-        const purchasedBooks = await Book.find({ _id: { $in: booksUser.purchasedBooks } }, { __v: 0 });
+        const petsUser = await Pets.find({ id_cliente: id }, { __v: 0 });
 
-        res.response({ rentedBooks, purchasedBooks }, 'Books of user', 200);
+        res.response(petsUser, 'Pets of user', 200);
 
     }
     catch (error) {
