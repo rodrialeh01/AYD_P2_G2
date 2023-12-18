@@ -14,6 +14,8 @@ export default {
         verde3: "#abc32f",
         verde4: "#809c13",
         verde5: "#607c3c",
+        verde6: "#94C800",
+        verde7: "#08EF29",
 
         // Azules
         azul1: "#caf0f8",
