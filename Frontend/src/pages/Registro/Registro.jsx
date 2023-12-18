@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export default function Registro() {
   const [rolSelect, setRolSelect] = useState(0);
 
   const [input, setInput] = useState({
-    nombre: "",
-    apellido: "",
-    telefono: "",
-    correo: "",
-    contrasena: "",
-    fecha_nacimiento: "",
-    rol: 0,
+    _id: "",
+    name: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    birthDate: "",
+    password: "",
+    role: 0,
   });
 
   const handleInputChange = (event) => {
@@ -82,8 +86,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white placeholder-black placeholder-opacity-50"
                 type="text"
-                name="nombre"
-                id="nombre"
+                name="name"
+                id="name"
                 placeholder="Nombre"
                 onChange={handleInputChange}
                 required
@@ -108,8 +112,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white placeholder-black placeholder-opacity-50"
                 type="text"
-                name="apellido"
-                id="apellido"
+                name="lastName"
+                id="lastName"
                 onChange={handleInputChange}
                 placeholder="Apellido"
                 required
@@ -134,8 +138,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white placeholder-black placeholder-opacity-50"
                 type="number"
-                name="telefono"
-                id="telefono"
+                name="phone"
+                id="phone"
                 placeholder="Número de Teléfono"
                 onChange={handleInputChange}
                 required
@@ -159,8 +163,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white placeholder-black placeholder-opacity-50"
                 type="email"
-                name="correo"
-                id="correo"
+                name="email"
+                id="email"
                 onChange={handleInputChange}
                 placeholder="Correo Electrónico"
                 required
@@ -186,8 +190,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white placeholder-black placeholder-opacity-50"
                 type="password"
-                name="constrasena"
-                id="constrasena"
+                name="password"
+                id="password"
                 onChange={handleInputChange}
                 placeholder="Contraseña"
                 required
@@ -212,8 +216,8 @@ export default function Registro() {
               <input
                 className="pl-2 outline-none border-none bg-transparent text-white "
                 type="date"
-                name="fecha_nacimiento"
-                id="fecha_nacimiento"
+                name="birthDate"
+                id="birthDate"
                 onChange={handleInputChange}
                 placeholder="fecha_nacimiento"
                 required
@@ -254,7 +258,13 @@ export default function Registro() {
               Registrar
             </button>
             <p className="mt-6 text-xs text-white text-center">
-              También puedes Iniciar Sesión
+              También puedes{" "}
+              <Link
+                to="/"
+                className="border-b border-white-500 border-dotted text-white-500 hover:text-gray-800 transition-all duration-300 ease-in-out"
+              >
+                Iniciar Sesion
+              </Link>
             </p>
           </form>
         </div>

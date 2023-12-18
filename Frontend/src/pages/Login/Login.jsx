@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 export default function Login() {
-
   const [input, setInput] = useState({
     email_user: "",
     pass_user: "",
@@ -14,16 +15,13 @@ export default function Login() {
       ...input,
       [event.target.name]: event.target.value,
     });
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(input);
     toast.success("Iniciando Sesión");
-  }
-
-
-  
+  };
 
   return (
     <>
@@ -77,12 +75,18 @@ export default function Login() {
                       <button
                         className="mt-5 tracking-wide font-semibold bg-verde3 text-black w-full py-4 rounded-lg hover:bg-verde4 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                         type="button"
-                        onClick={(e)=>handleSubmit(e)}
+                        onClick={(e) => handleSubmit(e)}
                       >
                         <span className="ml-3">Iniciar Sesión</span>
                       </button>
                       <p className="mt-6 text-xs text-black text-center">
-                        Si no tienes una cuenta, Registrate Aqui
+                        Si no tienes una cuenta,{" "}
+                        <Link
+                          to="/registro"
+                          className="border-b border-azul4 border-dotted text-blue-500 hover:text-blue-800 transition-all duration-300 ease-in-out"
+                        >
+                          Registrate Aqui
+                        </Link>
                       </p>
                     </div>
                   </div>
