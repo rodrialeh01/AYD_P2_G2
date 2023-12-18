@@ -14,6 +14,8 @@ export default {
         verde3: "#abc32f",
         verde4: "#809c13",
         verde5: "#607c3c",
+        verde6: "#94C800",
+        verde7: "#08EF29",
 
         // Azules
         azul1: "#caf0f8",
@@ -21,6 +23,14 @@ export default {
         azul3: "#00b4d8",
         azul4: "#0077b6",
         azul5: "#03045e",
+
+        // Cafe
+        cafe1: "#4C2C17",
+        cafe2: "#8c5c47",
+        cafe3: "#f8ede5",
+        
+        // Yellows
+        yellow1: "#F5CC00",
 
       }
     },
