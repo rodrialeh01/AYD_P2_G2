@@ -96,3 +96,13 @@ export const getPetsAttended = async (idCuidador) => {
     const response = await instance.get(`pet/keeper/${idCuidador}`);
     return response;
 }
+
+//Actualizar estado de la mascota
+export const updateStatus = async (data) => {
+    const response = await instance.post(`/pet/estado`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
