@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Service from "../../Service/Service";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../userCtx/User.jsx";
 import "./Login.css";
 
 export default function Login() {
+  const { logged, setLogged } = useUser();
   const [input, setInput] = useState({
     email_user: "",
     pass_user: "",
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (logged) {
+      if (JSON.parse(localStorage.getItem("data_user")).rol === 0)
+        navigate("/petcare/profile");
+      else 
+      navigate("/user/profile");
+    }
+  }, [logged]);
 
   const handleInputChange = (event) => {
     setInput({
@@ -17,10 +31,44 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(input);
-    toast.success("Iniciando Sesión");
+
+    try {
+      let data = {
+        email: input.email_user,
+        password: input.pass_user,
+      }
+      const res = await Service.login(data);
+      if (res.status === 200) {
+        const savedData = {
+          id: res.data.data._id,
+          rol: res.data.data.role,
+        };
+        localStorage.setItem("data_user", JSON.stringify(savedData));
+        setLogged(true);
+        toast.success("Inicio de sesión exitoso", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          if (res.data.data.role === 0) {
+            navigate("/petcare/profile");
+          } else {
+            navigate("/user/profile");
+          }
+        }, 3000);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
