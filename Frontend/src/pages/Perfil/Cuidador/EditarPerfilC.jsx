@@ -70,6 +70,20 @@ const EditProfileC = () => {
   const handleEditar = async (event) => {
     event.preventDefault();
     try {
+
+      if (userDetails.name === "" || userDetails.lastName === "" || userDetails.phone === "" || userDetails.birthDate === "") {
+        toast.error("Por favor, llene todos los campos", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        return;
+      }
+
       console.log(userDetails.birthDate);
       console.log(userDetails.password);
       if (userDetails.password === undefined) {
@@ -192,8 +206,8 @@ const EditProfileC = () => {
                       </label>
                       <input
                         type="text"
-                        name="lastname"
-                        id="lastname"
+                        name="lastName"
+                        id="lastName"
                         placeholder="Ingresa tu Apellido"
                         defaultValue={userDetails.lastName}
                         onChange={handleInputChange}
