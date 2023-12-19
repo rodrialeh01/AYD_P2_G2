@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserLarge } from "react-icons/fa6";
 import { GiDogHouse } from "react-icons/gi";
 import { IoLogOut } from "react-icons/io5";
 import { SiDatadog } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
 import hflogo from "../../assets/logo.png";
+import { useUser } from "../../userCtx/User";
 
 const SidebarCuidador = () => {
     const [open, setOpen] = useState(true);
+    const { logged, setLogged } = useUser();
+    useEffect(() => {
+        console.log(logged);
+        if (logged) {
+          const user = JSON.parse(localStorage.getItem("data_user"));
+          console.log(localStorage.getItem('data_user'));
+        }
+    }, [logged]);
+
     const Menus = [
         {
             name: "Mi Perfil",
@@ -24,6 +35,17 @@ const SidebarCuidador = () => {
             path: "/petcare/atention",
         }
     ]
+    const navigate = useNavigate();
+
+    const handlerGoTo = (path) => {
+        navigate(path);
+    }
+
+    const Logout = () => {
+        localStorage.removeItem("data_user");
+        setLogged(false);
+        navigate("/");
+    }
     return(
         <div className="flex">
             <div className={`${open ? 'w-72' : 'w-20'} duration-300 h-screen p-5 pt-8 bg-verde6 relative`}>
@@ -42,12 +64,12 @@ const SidebarCuidador = () => {
                 </div>
                 <ul>
                     {Menus.map((item, index) => (
-                        <li key={index} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`}>
+                        <li key={index} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`} onClick={() => handlerGoTo(item.path)}>
                             <div className={`${!open ? 'mr-4' : ''}`}>{item.icon}</div>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{item.name}</span>
                         </li>
                     ))}
-                    <li key={Menus.length} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`}>
+                    <li key={Menus.length} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`} onClick={Logout}>
                         <div className={`${!open ? 'mr-4' : ''}`}><IoLogOut className="text-3xl"/></div>
                         <span className={`${!open && 'hidden'} origin-left duration-200`}>{"Cerrar Sesión"}</span>
                     </li>

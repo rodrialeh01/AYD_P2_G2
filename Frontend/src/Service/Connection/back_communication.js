@@ -58,3 +58,19 @@ export const createPet = async (data) =>
     });
     return response;
 }
+
+//Obtener mascotas de un usuario
+export const getPetsByClient = async (idClient) => {
+    const response = await instance.get(`pet/client/${idClient}`);
+    return response;
+}
+
+//Hospedar mascota
+export const hostPet = async (data) => {
+    const response = await instance.post(`pet/hospedar`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
