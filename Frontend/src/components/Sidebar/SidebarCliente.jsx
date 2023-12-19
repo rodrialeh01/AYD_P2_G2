@@ -46,7 +46,7 @@ const SidebarCliente = () => {
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{item.name}</span>
                         </li>
                     ))}
-                    <li key={Menus.length} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-rojo1 rounded-md`}>
+                    <li key={Menus.length} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-azul3 rounded-md`}>
                         <div className={`${!open ? 'mr-4' : ''}`}><IoLogOut className="text-3xl"/></div>
                         <span className={`${!open && 'hidden'} origin-left duration-200`}>{"Cerrar Sesión"}</span>
                     </li>
