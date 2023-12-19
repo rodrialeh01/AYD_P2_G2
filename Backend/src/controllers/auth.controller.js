@@ -1,7 +1,18 @@
 import { User } from '../db/models/user.model.js';
-import { Resend } from 'resend';
+import  nodemailer  from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_KEY);
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    auth: {
+        type: 'OAuth2',
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+        clientId: process.env.OAUTH_CLIENTID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN
+      }
+});
+
 
 export const signUp = async (req, res) => {
     
@@ -46,19 +57,29 @@ export const signUp = async (req, res) => {
 
         // Enviar correo de verificacion
 
-        await resend.emails.send({
-            from: 'Huellita Feliz <onboarding@resend.dev>',
+        const mailOptions = {
+            from: 'Huellita Feliz <' + process.env.MAIL_USERNAME + '>',
             to: email,
-            subject: 'Bienvenido a Huellita Feliz',
+            subject: 'Bienvenido a Huellita Feliz - Confirmación de Correo',
             html: `<h1>¡Bienvenido a Huellita Feliz!</h1>
-            <p>Para poder ingresar a tu cuenta, necesitamos que confirmes tu correo electrónico.</p>
-            <p>Para confirmar tu correo, ingresa el siguiente código en el apartado de password de la aplicación en el primer inicio de sesión:</p>
-            <p><strong>${code}</strong></p>
-            <p>Si no has solicitado este correo, puedes ignorarlo.</p>
-            <p>¡Gracias!</p>`
-        });
+                  <p>Para poder ingresar a tu cuenta, necesitamos que confirmes tu correo electrónico.</p>
+                  <p>Para confirmar tu correo, ingresa el siguiente código en el apartado de password de la aplicación en el primer inicio de sesión:</p>
+                  <p><strong>${code}</strong></p>
+                  <p>Si no has solicitado este correo, puedes ignorarlo.</p>
+                  <p>¡Gracias!</p>`,
+          };
 
 
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              res.response(null, error.message, 500);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+          
         newUser.password = await newUser.encryptPassword(newUser.password);
         newUser.code = await newUser.encryptPassword(newUser.code);
         await newUser.save();
@@ -77,6 +98,11 @@ export const signInPassword = async (req, res) => {
         const { email, password } = req.body;
 
         const isRegistered = await User.findOne({ email: email }, { __v: 0 });
+
+        if (!email || !password) {
+            res.response(null, 'All fields are required', 400);
+            return;
+        }
         
         if (!isRegistered) {
             res.response(null, 'User not registered', 400);
