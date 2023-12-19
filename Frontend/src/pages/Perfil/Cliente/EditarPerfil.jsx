@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FaUserLarge } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-
+import Service from "../../../Service/Service";
 import toast, { Toaster } from "react-hot-toast";
 import SidebarCliente from "../../../components/Sidebar/SidebarCliente";
 const EditProfile = () => {
+
+  const navigate = useNavigate();
+
+  const validPassword = (password) => {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return re.test(password);
+  };
+
   const [userDetails, setUserDetails] = useState({
     _id: "",
     name: "",
@@ -16,7 +24,23 @@ const EditProfile = () => {
     role: 0,
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem("data_user"));
+    if (!usuario) {
+      navigate("/");
+    }
+
+    if (usuario.rol !== 1) {
+      navigate("/");
+    }
+
+    
+    obtenerUsuario();
+
+    userDetails.birthDate = parseDate(userDetails.birthDate);
+
+
+  }, []);
 
   const handleInputChange = (event) => {
     setUserDetails({
@@ -45,15 +69,66 @@ const EditProfile = () => {
     return `${year}-${month}-${day}`;
   }
 
+  
+
   const handleEditar = async (event) => {
     event.preventDefault();
     try {
-        
+      console.log(userDetails.birthDate);
+      console.log(userDetails.password);
+      if (userDetails.password === undefined) {
+        userDetails.password = null;
+      }
+      if (userDetails.password !== null && userDetails.password !== undefined) {
+        if (!validPassword(userDetails.password)) {
+          toast.error("La contraseña debe tener al menos 8 caracteres, una mayúscula y un número", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          return;
+        }
+      }
+
+      const data = {
+        name: userDetails.name,
+        lastName: userDetails.lastName,
+        phone: userDetails.phone,
+        birthDate: parseDate(userDetails.birthDate),
+        password: userDetails.password,
+      };
+
+      console.log(data);
+
+      const res = await Service.editUser(userDetails._id, data);
+      if (res.status === 200) {
+        toast.success("Perfil editado correctamente", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        navigate("/user/profile");
+      }
     } catch (error) {
+      toast.error("Error al editar el perfil", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      navigate("/user/profile");
+
       console.log(error);
     }
   };
-
   const obtenerUsuario = async () => {
     try {
       const data = JSON.parse(localStorage.getItem("data_user"));
@@ -68,7 +143,7 @@ const EditProfile = () => {
   };
 
   const handlerRegresar = () => {
-    
+    navigate("/user/profile");
   };
 
   return (
@@ -110,7 +185,7 @@ const EditProfile = () => {
                         placeholder="Ingresa tu Nombre"
                         defaultValue={userDetails.name}
                         onChange={handleInputChange}
-                        required={true}
+                        required
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
@@ -130,7 +205,7 @@ const EditProfile = () => {
                         placeholder="Ingresa tu Apellido"
                         defaultValue={userDetails.lastName}
                         onChange={handleInputChange}
-                        required={true}
+                        required
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
@@ -151,7 +226,7 @@ const EditProfile = () => {
                   placeholder="Ingresa tu número de teléfono"
                   defaultValue={userDetails.phone}
                   onChange={handleInputChange}
-                  required={true}
+                  required
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -181,12 +256,13 @@ const EditProfile = () => {
                   Contraseña
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   id="password"
                   placeholder="Ingresa tu contraseña"
                   defaultValue={userDetails.password}
                   onChange={handleInputChange}
+
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -203,7 +279,8 @@ const EditProfile = () => {
                   name="birthDate"
                   id="birthDate"
                   defaultValue={userDetails.birthDate}
-                  required={true}
+                  onChange={handleInputChange}
+                  required
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -211,6 +288,7 @@ const EditProfile = () => {
               <div>
               <button
                     className={`hover:bg-[#334173] transition duration-300 ease-in-out w-full rounded-md bg-[#48578E] py-3 px-8 mb-3 shadow-xl border-2 border-[#334173]/90 py-3 px-8 text-center text-base font-semibold text-white outline-none`}
+                    onClick={(e) => handleEditar(e)}
                   >
                 
                   Aplicar Cambios
