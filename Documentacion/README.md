@@ -83,6 +83,52 @@
 
 ## Diagrama de caso de uso
 
+![Diagrama de caso de uso](./CasosUso/Diagrama.png)
+
 ## Diagramas de caso de uso de alto nivel
 
+<div align="center"><img src="./CasosUso/AltoNivel/1.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/2.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/3.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/4.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/5.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/6.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/7.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/8.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/9.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/10.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/11.png"/></div>
+
 ## Diagramas de caso de uso expandido
+
+<div align="center"><img src="./CasosUso/Extendidos/1.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/2.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/3.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/4.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/5.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/6.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/7.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/8.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/9.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/10.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/11.png"/></div>
