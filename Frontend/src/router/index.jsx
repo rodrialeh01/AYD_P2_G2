@@ -1,12 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LayoutPrivate from '../Layout/LayoutPrivate';
+import AtenderMascota from '../pages/AtenderMascota/AtenderMascota';
 import Login from '../pages/Login/Login';
-import Registro from '../pages/Registro/Registro';
-import Perfil from '../pages/Perfil/Cliente/Perfil';
-import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
-import EditarPerfil from '../pages/Perfil/Cliente/EditarPerfil';
-import EditarPerfilC from '../pages/Perfil/Cuidador/EditarPerfilC';
+import MascotasHospedadas from '../pages/MascotasHospedadas/MascotasHospedadas';
+import MisMascotas from '../pages/MisMascotas/MisMascotas';
 import PerfMascota from '../pages/PerfMascota/PerfMascota';
+import EditarPerfil from '../pages/Perfil/Cliente/EditarPerfil';
+import Perfil from '../pages/Perfil/Cliente/Perfil';
+import EditarPerfilC from '../pages/Perfil/Cuidador/EditarPerfilC';
+import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
+import Registro from '../pages/Registro/Registro';
 
 export const router = createBrowserRouter([
     {
@@ -34,8 +37,8 @@ export const router = createBrowserRouter([
                 element: < PerfMascota />
             },
             {
-                path: 'pets',
-                element: null
+                path: 'mypets',
+                element: < MisMascotas />
             }
         ]
     },
@@ -53,11 +56,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'pets',
-                element: null
+                element: < MascotasHospedadas />
             },
             {
                 path: 'atention',
-                element: null
+                element: <AtenderMascota/>
             }
         ]
     }
