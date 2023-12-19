@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LayoutPrivate from '../Layout/LayoutPrivate';
+import AtenderMascota from '../pages/AtenderMascota/AtenderMascota';
 import Login from '../pages/Login/Login';
+import MascotasHospedadas from '../pages/MascotasHospedadas/MascotasHospedadas';
 import MisMascotas from '../pages/MisMascotas/MisMascotas';
 import PerfMascota from '../pages/PerfMascota/PerfMascota';
 import EditarPerfil from '../pages/Perfil/Cliente/EditarPerfil';
@@ -54,11 +56,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'pets',
-                element: null
+                element: < MascotasHospedadas />
             },
             {
                 path: 'atention',
-                element: null
+                element: <AtenderMascota/>
             }
         ]
     }

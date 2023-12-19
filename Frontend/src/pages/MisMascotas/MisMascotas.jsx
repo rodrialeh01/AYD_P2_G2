@@ -19,7 +19,7 @@ const MisMascotas = () => {
         const user = JSON.parse(localStorage.getItem("data_user"));
         console.log(user);
         if (user.rol !== 1) {
-            navigate("/");
+            navigate("/petcare/profile");
         }
         Service.getPetsByClient(user.id)
         .then((res) => {
@@ -70,6 +70,7 @@ const MisMascotas = () => {
                 draggable: true,
                 progress: undefined,
             });
+            setIdMascota("");
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
@@ -84,8 +85,8 @@ const MisMascotas = () => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-              });
-
+            });
+            setIdMascota("");
         });
     }
 
@@ -145,6 +146,7 @@ const MisMascotas = () => {
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
                             disabled={mascota.is_hospedada}
+                            onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
                             </button>

@@ -74,3 +74,25 @@ export const hostPet = async (data) => {
     });
     return response;
 }
+
+//Obtener mascotas
+export const getPets = async () => {
+    const response = await instance.get(`pet/pets`);
+    return response;
+}
+
+//Atender mascota
+export const attendPet = async (data) => {
+    const response = await instance.post(`pet/atender`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+//Obtener mascotas atendidas
+export const getPetsAttended = async (idCuidador) => {
+    const response = await instance.get(`pet/keeper/${idCuidador}`);
+    return response;
+}
