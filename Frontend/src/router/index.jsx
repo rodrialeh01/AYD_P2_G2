@@ -2,6 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import LayoutPrivate from '../Layout/LayoutPrivate';
 import Login from '../pages/Login/Login';
 import Registro from '../pages/Registro/Registro';
+import Perfil from '../pages/Perfil/Cliente/Perfil';
+import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
+import EditarPerfil from '../pages/Perfil/Cliente/EditarPerfil';
+import EditarPerfilC from '../pages/Perfil/Cuidador/EditarPerfilC';
+import PerfMascota from '../pages/PerfMascota/PerfMascota';
 
 export const router = createBrowserRouter([
     {
@@ -18,11 +23,15 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'profile',
-                element: null
+                element: < Perfil />
+            },
+            {
+                path: 'editprofile',
+                element: < EditarPerfil />
             },
             {
                 path: 'profilepet',
-                element: null
+                element: < PerfMascota />
             },
             {
                 path: 'pets',
@@ -36,7 +45,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'profile',
-                element: null
+                element: < PerfilC />
+            },
+            {
+                path: 'editprofile',
+                element: < EditarPerfilC />
             },
             {
                 path: 'pets',
