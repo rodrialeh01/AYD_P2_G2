@@ -24,9 +24,19 @@ export default {
         azul4: "#0077b6",
         azul5: "#03045e",
 
+        // Cafe
+        cafe1: "#4C2C17",
+        cafe2: "#8c5c47",
+        cafe3: "#f8ede5",
+        
+        // Yellows
+        yellow1: "#F5CC00",
+
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }
 
