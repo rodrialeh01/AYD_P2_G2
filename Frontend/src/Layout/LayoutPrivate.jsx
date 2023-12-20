@@ -1,9 +1,11 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useUser } from '../userCtx/User';
 
 const LayoutPrivate = () => {
+    const { logged } = useUser();
     return (
         <>
-            <Outlet />
+            {logged ? <Outlet /> : <Navigate to="/" />}
         </>
     )
 }
