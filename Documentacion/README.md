@@ -81,6 +81,8 @@
 
 ## Modelo entidad relación
 
+<div align="center"><img src="./BD/ModeloDB.png"/></div>
+
 ## Diagrama de caso de uso
 
 ![Diagrama de caso de uso](./CasosUso/Diagrama.png)
