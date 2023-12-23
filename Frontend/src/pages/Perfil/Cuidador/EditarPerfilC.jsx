@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaUserLarge } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-
+import Service from "../../../Service/Service";
 import toast, { Toaster } from "react-hot-toast";
 import SidebarCuidador from "../../../components/Sidebar/SidebarCuidador";
 const EditProfileC = () => {
+  const navigate = useNavigate();
+
   const [userDetails, setUserDetails] = useState({
     _id: "",
     name: "",
@@ -16,7 +18,27 @@ const EditProfileC = () => {
     role: 0,
   });
 
-  useEffect(() => {}, []);
+  const validPassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return regex.test(password);
+  };
+
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem("data_user"));
+    if (!usuario) {
+      navigate("/");
+    }
+    
+    if (usuario.rol !== 0) {
+      navigate("/");
+    }
+
+
+    obtenerUsuario();
+    console.log(userDetails.birthDate);
+    userDetails.birthDate = parseDate2(userDetails.birthDate);
+
+  }, []);
 
   const handleInputChange = (event) => {
     setUserDetails({
@@ -48,8 +70,71 @@ const EditProfileC = () => {
   const handleEditar = async (event) => {
     event.preventDefault();
     try {
-        
+
+      if (userDetails.name === "" || userDetails.lastName === "" || userDetails.phone === "" || userDetails.birthDate === "") {
+        toast.error("Por favor, llene todos los campos", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        return;
+      }
+
+      console.log(userDetails.birthDate);
+      console.log(userDetails.password);
+      if (userDetails.password === undefined) {
+        userDetails.password = null;
+      }
+      if (userDetails.password !== null && userDetails.password !== undefined) {
+        if (!validPassword(userDetails.password)) {
+          toast.error("La contraseña debe tener al menos 8 caracteres, una mayúscula y un número", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          return;
+        }
+      }
+
+      const data = {
+        name: userDetails.name,
+        lastName: userDetails.lastName,
+        phone: userDetails.phone,
+        birthDate: parseDate(userDetails.birthDate),
+        password: userDetails.password,
+      };
+
+      console.log(data);
+
+      const res = await Service.editUser(userDetails._id, data);
+      if (res.status === 200) {
+        toast.success("Perfil editado correctamente", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        navigate("/petcare/profile");
+      }
     } catch (error) {
+      toast.error("Error al editar el perfil", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
       console.log(error);
     }
   };
@@ -68,11 +153,11 @@ const EditProfileC = () => {
   };
 
   const handlerRegresar = () => {
-    
+    navigate("/petcare/profile")
   };
 
   return (
-    <div className="flex bg-gradient-to-tr from-verde4 to-verde2  ">
+    <div className="flex bg-gradient-to-tr bg-verde3/70">
       <SidebarCuidador />
       <div className="p-7 text-2xl font-semibold flex-1 h-screen overflow-y-scroll scrollbar-hide  border-l-2 border-white">
         <Toaster />
@@ -85,9 +170,6 @@ const EditProfileC = () => {
         <div class="flex items-center justify-center p-12">
           <div class="mx-auto w-full max-w-[550px]">
             <form
-              onSubmit={(e) => {
-                handleEditar(e);
-              }}
             >
               <div class="mb-5 pt-3">
                 <label class="mb-5 block text-base font-semibold text-zinc-900 sm:text-xl">
@@ -109,7 +191,7 @@ const EditProfileC = () => {
                         placeholder="Ingresa tu Nombre"
                         defaultValue={userDetails.name}
                         onChange={handleInputChange}
-                        required={true}
+                        required
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
@@ -124,12 +206,12 @@ const EditProfileC = () => {
                       </label>
                       <input
                         type="text"
-                        name="lastname"
-                        id="lastname"
+                        name="lastName"
+                        id="lastName"
                         placeholder="Ingresa tu Apellido"
                         defaultValue={userDetails.lastName}
                         onChange={handleInputChange}
-                        required={true}
+                        required
                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
@@ -150,7 +232,7 @@ const EditProfileC = () => {
                   placeholder="Ingresa tu número de teléfono"
                   defaultValue={userDetails.phone}
                   onChange={handleInputChange}
-                  required={true}
+                  required
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -180,7 +262,7 @@ const EditProfileC = () => {
                   Contraseña
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   id="password"
                   placeholder="Ingresa tu contraseña"
@@ -201,8 +283,9 @@ const EditProfileC = () => {
                   type="date"
                   name="birthDate"
                   id="birthDate"
-                  defaultValue={userDetails.birthDate}
-                  required={true}
+                  defaultValue={(userDetails.birthDate)}
+                  required
+                  onChange={handleInputChange}
                   class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -210,6 +293,7 @@ const EditProfileC = () => {
               <div>
                 <button
                   className={`hover:bg-[#1F6564] transition duration-300 ease-in-out w-full rounded-md bg-[#257F75] py-3 px-8 mb-3 shadow-xl border-2 border-[#1F6564]/90 py-3 px-8 text-center text-base font-semibold text-white  outline-none`}
+                  onClick={(e) =>handleEditar(e)}
                 >
                   Aplicar Cambios
                 </button>

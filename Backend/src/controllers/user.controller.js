@@ -22,16 +22,30 @@ export const updateInfoUser = async (req, res) => {
         const { name, lastName, phone, birthDate, password } = req.body;
 
         //Verificar que todos los campos esten llenos
-        if (!name || !lastName || !phone || !birthDate || !password) {
+        if (!name || !lastName || !phone || !birthDate) {
             res.response(null, 'All fields are required', 400);
             return;
         }
 
-        await User.updateOne({ _id: id }, { name, lastName, phone, birthDate, password });
+        //Si viene la contrasenia nula, no se actualiza
 
-        const userUpdated = await User.findOne({ _id: id }, { __v: 0, password: 0, code: 0, verified: 0 });
+        if (!password) {
+            await User.updateOne({ _id: id }, { name, lastName, phone, birthDate });
+            const userUpdated = await User.findOne({ _id: id }, { __v: 0, password: 0, code: 0, verified: 0 });
+            res.response(userUpdated, 'User updated successfully', 200);
+        }else{
+            //Cifrar contrasenia
 
-        res.response(userUpdated, 'User updated successfully', 200);
+            const passwordHash = await User.encryptPassword(password);
+            await User.updateOne({ _id: id }, { name, lastName, phone, birthDate, passwordHash });
+            const userUpdated = await User.findOne({ _id: id }, { __v: 0, password: 0, code: 0, verified: 0 });
+            res.response(userUpdated, 'User updated successfully', 200);
+
+        }
+
+
+
+        
 
     } catch (error) {
         console.log(error);

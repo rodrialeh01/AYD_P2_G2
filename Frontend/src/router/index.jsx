@@ -1,8 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LayoutPrivate from '../Layout/LayoutPrivate';
+import AtenderMascota from '../pages/AtenderMascota/AtenderMascota';
 import Login from '../pages/Login/Login';
+import MascotasHospedadas from '../pages/MascotasHospedadas/MascotasHospedadas';
+import MisMascotas from '../pages/MisMascotas/MisMascotas';
+import PerfMascota from '../pages/PerfMascota/PerfMascota';
+import EditarPerfil from '../pages/Perfil/Cliente/EditarPerfil';
+import Perfil from '../pages/Perfil/Cliente/Perfil';
+import EditarPerfilC from '../pages/Perfil/Cuidador/EditarPerfilC';
+import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
 import Registro from '../pages/Registro/Registro';
-
+import Resenia from '../pages/Reviews/Resenia';
+import ReseniaCuidador from '../pages/Reviews/ReseniaCuidador';
+import TiendaCuidador from '../pages/Tienda/TiendaCuidador';
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -18,16 +28,25 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'profile',
-                element: null
+                element: < Perfil />
+            },
+            {
+                path: 'editprofile',
+                element: < EditarPerfil />
             },
             {
                 path: 'profilepet',
-                element: null
+                element: < PerfMascota />
             },
             {
-                path: 'pets',
-                element: null
+                path: 'mypets',
+                element: < MisMascotas />
+            },
+            {
+                path: 'resenia',
+                element: < Resenia />
             }
+
         ]
     },
     {
@@ -36,15 +55,27 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'profile',
-                element: null
+                element: < PerfilC />
+            },
+            {
+                path: 'editprofile',
+                element: < EditarPerfilC />
             },
             {
                 path: 'pets',
-                element: null
+                element: < MascotasHospedadas />
             },
             {
                 path: 'atention',
-                element: null
+                element: <AtenderMascota/>
+            },
+            {
+                path: 'resenia',
+                element: < ReseniaCuidador />
+            },
+            {
+                path: 'tienda',
+                element: < TiendaCuidador />
             }
         ]
     }

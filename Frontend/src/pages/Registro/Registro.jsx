@@ -3,19 +3,19 @@ import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Service from "../../Service/Service";
 
 export default function Registro() {
   const [rolSelect, setRolSelect] = useState(0);
-
+  const navigate = useNavigate();
   const [input, setInput] = useState({
-    _id: "",
     name: "",
     lastName: "",
     phone: "",
     email: "",
     birthDate: "",
     password: "",
-    role: 0,
+    role: "0",
   });
 
   const handleInputChange = (event) => {
@@ -29,10 +29,86 @@ export default function Registro() {
     setRolSelect(value);
   };
 
+  function parseDate(inputDate) {
+    const date = new Date(inputDate);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+
+    return `${day}/${month}/${year}`;
+  }
+
   const options = [
-    { value: 0, label: "Cuidador" },
-    { value: 1, label: "Cliente" },
+    { value: "0", label: "Cuidador" },
+    { value: "1", label: "Cliente" },
   ];
+
+  const validPassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return regex.test(password);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    input.birthDate = parseDate(input.birthDate);
+    console.log(input);
+    input.role = rolSelect;
+    if (!validPassword(input.password)) {
+      toast.error(
+        "Error al registrar - La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número.",
+        {
+          position: "upper-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      return;
+    }
+    try {
+      const res = await Service.registro(input);
+      if (res.status === 200) {
+        toast.success("Registro exitoso", {
+          position: "upper-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      } else {
+        toast.error(res.data.message, {
+          position: "upper-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error al registrar", {
+        position: "upper-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   return (
     <>
@@ -254,6 +330,7 @@ export default function Registro() {
             <button
               type="submit"
               className="block w-full bg-azul4 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 hover:bg-azul5 transition duration-300 ease-in-out"
+              onClick={(e) => handleSubmit(e)}
             >
               Registrar
             </button>
