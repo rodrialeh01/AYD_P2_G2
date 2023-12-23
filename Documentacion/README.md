@@ -81,6 +81,8 @@
 
 ## Modelo entidad relación
 
+<div align="center"><img src="./BD/ModeloDB.png"/></div>
+
 ## Diagrama de caso de uso
 
 ![Diagrama de caso de uso](./CasosUso/Diagrama.png)
@@ -109,6 +111,27 @@
 
 <div align="center"><img src="./CasosUso/AltoNivel/11.png"/></div>
 
+<div align="center"><img src="./CasosUso/AltoNivel/12.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/13.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/14.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/15.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/16.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/17.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/18.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/19.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/20.png"/></div>
+
+<div align="center"><img src="./CasosUso/AltoNivel/21.png"/></div>
+
+
 ## Diagramas de caso de uso expandido
 
 <div align="center"><img src="./CasosUso/Extendidos/1.png"/></div>
@@ -132,3 +155,23 @@
 <div align="center"><img src="./CasosUso/Extendidos/10.png"/></div>
 
 <div align="center"><img src="./CasosUso/Extendidos/11.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/12.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/13.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/14.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/15.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/16.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/17.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/18.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/19.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/20.png"/></div>
+
+<div align="center"><img src="./CasosUso/Extendidos/21.png"/></div>
