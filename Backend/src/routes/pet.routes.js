@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { createPet, getPet, getPetsByClient, getPets, updatePet, getPetsByCuidador, hospedarPet, atenderPet, changeStatePet } from "../controllers/pet.controller.js";
+import { createPet, getPet, getPetsByClient, getPets, updatePet, getPetsByCuidador, hospedarPet, atenderPet, changeStatePet, devolverPet } from "../controllers/pet.controller.js";
 
 const router = Router();
 
 router.post("/create", createPet);
+router.post("/devolver/:id_pet", devolverPet);
+router.post("/recoger/:id_pet", devolverPet);
 router.get("/pets", getPets);
 router.patch("/update/:id", updatePet);
 router.get("/client/:id", getPetsByClient);

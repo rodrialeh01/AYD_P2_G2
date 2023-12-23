@@ -180,7 +180,7 @@ export const hospedarPet = async (req, res) => {
 export const devolverPet = async (req, res) => {
     try{
 
-        const { id_pet } = req.body;
+        const { id_pet } = req.params;
 
         if(!id_pet) {
             return res.response(null, 'Missing params', 400);
@@ -188,12 +188,13 @@ export const devolverPet = async (req, res) => {
 
         const result = await Pet.updateOne({ _id: id_pet }, {
             fecha_devolucion: null,
-            is_hospedada: false,
+            id_cuidador: null,
+            is_hospedada: true,
             is_atendida: false,
-            estado: ''
+            estado: 'Listo para recoger'
         });
 
-        if(!result) {
+        if(result.matchedCount === 0) {
             return res.response(null, 'Pet not found', 404);
         }
 
@@ -252,6 +253,36 @@ export const atenderPet = async (req, res) => {
         });
 
         if(!result2) {
+            return res.response(null, 'Pet not found', 404);
+        }
+
+        res.response(null, 'Pet updated successfully', 200);
+
+    } catch(error) {
+        console.log(error);
+        res.response(null, error.message, 500);
+    }
+}
+
+export const recogerPet = async (req, res) => {
+
+    try{
+
+        const { id_pet } = req.params;
+
+        if(!id_pet) {
+            return res.response(null, 'Missing params', 400);
+        }
+
+        const result = await Pet.updateOne({ _id: id_pet }, {
+            fecha_devolucion: null,
+            id_cuidador: null,
+            is_hospedada: false,
+            is_atendida: false,
+            estado: 'Recogida'
+        });
+
+        if(result.matchedCount === 0) {
             return res.response(null, 'Pet not found', 404);
         }
 
