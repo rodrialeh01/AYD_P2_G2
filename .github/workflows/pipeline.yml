@@ -19,7 +19,11 @@ jobs:
     
       - name: Instalando dependencias
         run: npm install
-        working-directory: ${{ matrix.directory }}
+        working-directory: Frontend
+      
+      - name: Instalando dependencias
+        run: npm install
+        working-directory: Backend
 
   lint:
     needs: install-dependencies
