@@ -6,7 +6,16 @@ on:
       - develop
 
 jobs:
-  deploy:
+
+  avoid_reduncy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Cancelar Builds Redundantes
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: ${{ github.token }}
+
+  lint:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -25,16 +34,35 @@ jobs:
         run: npm run eslint
         working-directory: Backend
 
-      - name: Build Backend
-        run: npm run build
-        working-directory: Backend
-
       - name: Instalando dependencias del Frontend
         run: npm install
         working-directory: Frontend
 
       - name: Lint Frontend
         run: npm run eslint
+        working-directory: Frontend
+
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Instalando dependencias del Backend
+        run: npm install
+        working-directory: Backend
+
+      - name: Build Backend
+        run: npm run build
+        working-directory: Backend
+
+      - name: Instalando dependencias del Frontend
+        run: npm install
         working-directory: Frontend
 
       - name: Build Frontend
