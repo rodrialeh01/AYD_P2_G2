@@ -9,7 +9,7 @@ describe('Test1 - Login Correcto', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('paxelar971@arensus.com');
     cy.get('@loginPassword').type('Password01');
-    cy.wait(500);
+    //cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
@@ -58,13 +58,13 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('bejiro5828@anawalls.com');
     cy.get('@loginPassword').type('Password01');
-    cy.wait(500);
+    //cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-    cy.wait(500);
+    //cy.wait(500);
     cy.visit('/user/profilePet');
 
     // Ingreso de datos Correctos
@@ -112,13 +112,13 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
     })
-    cy.wait(500);
+    //cy.wait(500);
     cy.get('[data-test-id="title"]').should('exist').should('be.visible');
 
     cy.intercept('GET', '/pet/client/*').as('getPets');
 
     cy.visit('/user/mypets');
-    cy.wait(500);
+    //cy.wait(500);
     cy.wait('@getPets').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
@@ -131,7 +131,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     })
 
     cy.get('@hostPetButton').click();
-    cy.wait(300);
+    //cy.wait(300);
 
     cy.get('[data-test-id="input-fecha"]').as('hostingDate');
 
@@ -161,13 +161,13 @@ describe('Test4 - Crear Review', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('bejiro5828@anawalls.com');
     cy.get('@loginPassword').type('Password01');
-    cy.wait(500);
+    //cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-    cy.wait(500);
+    //cy.wait(500);
     cy.visit('/user/resenia');
 
     cy.get('[data-test-id="cypress-review-comment"]').as('review');
