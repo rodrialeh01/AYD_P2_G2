@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SidebarCuidador from "../../components/Sidebar/SidebarCuidador";
 export default function TiendaCuidador() {
   const products = [
@@ -14,7 +14,7 @@ export default function TiendaCuidador() {
     },
   ];
 
-  const [product, setProduct] = useState([]);
+  //const [product, setProduct] = useState([]);
 
   const [modalEditar, setModalEditar] = useState(false);
   const [modalAgregar, setModalAgregar] = useState(false);
@@ -31,9 +31,9 @@ export default function TiendaCuidador() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleOpenEditar = () => {
+  /*const handleOpenEditar = () => {
     setModalEditar(true);
-  };
+  };*/
 
   return (
     <>
@@ -69,8 +69,8 @@ export default function TiendaCuidador() {
               </button>
             </div>
             <div className="w-full height-100 flex flex-wrap overflow-y-auto scrollbar-hide  justify-center ">
-              {products.map((product) => (
-                <div className="h-auto w-1/3 max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transition-all ease-out duration-300 hover:scale-105 p-2 m-3">
+              {products.map((product, index) => (
+                <div key={index} className="h-auto w-1/3 max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transition-all ease-out duration-300 hover:scale-105 p-2 m-3">
                   <div className="flex items-center justify-center">
                     <img
                       src={product.pathImage}
@@ -157,9 +157,9 @@ export default function TiendaCuidador() {
 
                   <form>
                     <div className="w-full bg-black2 items-center justify-center">
-                      <div class=" w-full p-5 rounded-xl z-10">
-                        <div class="grid grid-cols-1 space-y-2">
-                          <label class="text-sm font-bold text-white/70 tracking-wide">
+                      <div className=" w-full p-5 rounded-xl z-10">
+                        <div className="grid grid-cols-1 space-y-2">
+                          <label className="text-sm font-bold text-white/70 tracking-wide">
                             Imagen (URL)
                           </label>
                           <input
@@ -171,24 +171,24 @@ export default function TiendaCuidador() {
                             readOnly={true}
                           />
                         </div>
-                        <p class="text-sm text-gray-300"></p>
+                        <p className="text-sm text-gray-300"></p>
                       </div>
                     </div>
 
                     <div className="relative p-6 flex-auto">
-                      <div class="w-full">
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                      <div className="w-full">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Nombre del producto:
                             </label>
                           </div>
-                          <div class="w-full mr-4">
+                          <div className="w-full mr-4">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
                               name="name"
@@ -198,18 +198,18 @@ export default function TiendaCuidador() {
                           </div>
                         </div>
 
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Precio:
                             </label>
                           </div>
-                          <div class="w-full mr-8">
+                          <div className="w-full mr-8">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="number"
                               name="price"
@@ -218,17 +218,17 @@ export default function TiendaCuidador() {
                             ></input>
                           </div>
 
-                          <div class="">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Cantidad:
                             </label>
                           </div>
-                          <div class="w-full mr-8">
+                          <div className="w-full mr-8">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="quantity"
                               type="number"
                               name="quantity"
@@ -238,16 +238,16 @@ export default function TiendaCuidador() {
                           </div>
                         </div>
                         <label
-                          class="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
-                          for="inline-full-name"
+                          className="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
+                          htmlFor="inline-full-name"
                         >
                           Descripción
                         </label>
-                        <div class="md:flex md:items-center mb-6">
-                          <div class=""></div>
-                          <div class="w-full ">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className=""></div>
+                          <div className="w-full ">
                             <textarea
-                              class="bg-gray-200 appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
                               name="description"
@@ -259,7 +259,7 @@ export default function TiendaCuidador() {
                       </div>
                       <button
                         type="submit"
-                        class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2"
+                        className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -337,9 +337,9 @@ export default function TiendaCuidador() {
 
                   <form>
                     <div className="w-full bg-black2 items-center justify-center">
-                      <div class=" w-full p-5 rounded-xl z-10">
-                        <div class="grid grid-cols-1 space-y-2">
-                          <label class="text-sm font-bold text-white/70 tracking-wide">
+                      <div className=" w-full p-5 rounded-xl z-10">
+                        <div className="grid grid-cols-1 space-y-2">
+                          <label className="text-sm font-bold text-white/70 tracking-wide">
                             Imagen (URL)
                           </label>
                           <input
@@ -351,24 +351,24 @@ export default function TiendaCuidador() {
 
                           />
                         </div>
-                        <p class="text-sm text-gray-300"></p>
+                        <p className="text-sm text-gray-300"></p>
                       </div>
                     </div>
 
                     <div className="relative p-6 flex-auto">
-                      <div class="w-full">
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                      <div className="w-full">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Nombre del producto:
                             </label>
                           </div>
-                          <div class="w-full mr-4">
+                          <div className="w-full mr-4">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
                               name="name"
@@ -377,18 +377,18 @@ export default function TiendaCuidador() {
                           </div>
                         </div>
 
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Precio:
                             </label>
                           </div>
-                          <div class="w-full mr-8">
+                          <div className="w-full mr-8">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="number"
                               name="price"
@@ -396,17 +396,17 @@ export default function TiendaCuidador() {
                             ></input>
                           </div>
 
-                          <div class="">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Cantidad:
                             </label>
                           </div>
-                          <div class="w-full mr-8">
+                          <div className="w-full mr-8">
                             <input
-                              class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="quantity"
                               type="number"
                               name="quantity"
@@ -415,16 +415,16 @@ export default function TiendaCuidador() {
                           </div>
                         </div>
                         <label
-                          class="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
-                          for="inline-full-name"
+                          className="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
+                          htmlFor="inline-full-name"
                         >
                           Descripción
                         </label>
-                        <div class="md:flex md:items-center mb-6">
-                          <div class=""></div>
-                          <div class="w-full ">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className=""></div>
+                          <div className="w-full ">
                             <textarea
-                              class="bg-gray-200 appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              className="bg-gray-200 appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
                               name="description"
@@ -435,7 +435,7 @@ export default function TiendaCuidador() {
                       </div>
                       <button
                         type="submit"
-                        class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2"
+                        className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 mr-2 mb-2"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

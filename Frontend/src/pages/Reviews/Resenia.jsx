@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import SidebarCliente from "../../components/Sidebar/SidebarCliente";
-import { FaUserLarge } from "react-icons/fa6";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import Service from "../../Service/Service";
+import { FaUserLarge } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Service from "../../Service/Service";
+import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 
 export default function Resenia() {
   const [reviews, setReviews] = useState([]);
@@ -197,8 +197,8 @@ export default function Resenia() {
 
                 {loading ? null : (
                   <div>
-                    {reviews.map((review) => (
-                      <div className="bg-white h-[170px] w-full mb-6 rounded-md border-black border-2 shadow-md">
+                    {reviews.map((review, index) => (
+                      <div key={index} className="bg-white h-[170px] w-full mb-6 rounded-md border-black border-2 shadow-md">
                         <div className="h-2/6 w-full flex flex-row justify-between items-center px-4 border-b-2 border-black">
                           <div className="h-full w-1/2 flex flex-row justify-start items-center">
                             <FaUserLarge className="w-12 h-12 mr-4" />
