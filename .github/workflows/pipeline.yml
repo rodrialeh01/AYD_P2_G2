@@ -26,6 +26,7 @@ jobs:
 
       - name: Lint
         run: npm run eslint
+        working-directory: Frontend
 
       - name: ejecucion de pruebas
         run: npm run dev
