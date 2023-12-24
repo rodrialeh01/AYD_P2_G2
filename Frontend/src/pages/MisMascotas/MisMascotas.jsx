@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GiDogHouse } from "react-icons/gi";
 import { MdPets } from "react-icons/md";
+import { SiDatadog } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import Service from "../../Service/Service";
 import SidebarCliente from "../../components/Sidebar/SidebarCliente";
@@ -92,6 +93,42 @@ const MisMascotas = () => {
         });
     }
 
+    const cambiarBotonRecoger = (estado) => {
+        console.log(estado);
+        return String(estado).toLowerCase() === "listo para recoger"
+    }
+
+    const RecogerMascota = (id) => {
+        Service.pickPet(id)
+        .then((res) => {
+            console.log(res.data);
+            toast.success("Tu mascota se recogió con exito!", {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined, 
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.error("Error al recoger mascota", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined, 
+            });
+        });
+    }
+
     return(
         <div className="flex bg-azul3">
             <Toaster />
@@ -120,6 +157,15 @@ const MisMascotas = () => {
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Fin de hospedaje: </span><span className="text-base">{mascota.fecha_devolucion}</span><br/></span>
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado:'En espera de ser atendida'}</span>
                             </p>
+                            {cambiarBotonRecoger(mascota.estado)?
+                            <button
+                            className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                            type="button"
+                            onClick={() => RecogerMascota(mascota._id)}
+                            >
+                            <SiDatadog className="text-2xl inline-block mr-2" />Recoger a mi mascota
+                            </button>
+                            :
                             <button
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
@@ -127,7 +173,7 @@ const MisMascotas = () => {
                             onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
-                            </button>
+                            </button>}
                         </div>
                         </div>
                     ) : (
@@ -142,8 +188,17 @@ const MisMascotas = () => {
                             <span className="font-bold">Contacto del Veterinario: </span><span className="text-base">{mascota.contacto_veterinario}</span><br/>
                             <span className="font-bold">Comentarios: </span><span className="text-sm">{mascota.comentarios_extra}</span><br/>
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Fin de hospedaje: </span><span className="text-base">{mascota.fecha_devolucion}</span><br/></span>
-                            <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado:'En espera de ser atendida'}</span>
+                            <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado!=='Listo para recoger'? 'En espera de ser atendida':mascota.estado:''}</span>
                             </p>
+                            {cambiarBotonRecoger(mascota.estado)?
+                            <button
+                            className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                            type="button"
+                            onClick={() => RecogerMascota(mascota._id)}
+                            >
+                            <SiDatadog className="text-2xl inline-block mr-2" />Recoger a mi mascota
+                            </button>
+                            :
                             <button
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
@@ -151,7 +206,7 @@ const MisMascotas = () => {
                             onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
-                            </button>
+                            </button>}
                         </div>
                         </div>
                     )

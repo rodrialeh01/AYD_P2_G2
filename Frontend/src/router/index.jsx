@@ -12,7 +12,9 @@ import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
 import Registro from '../pages/Registro/Registro';
 import Resenia from '../pages/Reviews/Resenia';
 import ReseniaCuidador from '../pages/Reviews/ReseniaCuidador';
+import TiendaCliente from '../pages/Tienda/TiendaCliente';
 import TiendaCuidador from '../pages/Tienda/TiendaCuidador';
+
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -43,8 +45,12 @@ export const router = createBrowserRouter([
                 element: < MisMascotas />
             },
             {
-                path: 'resenia',
+                path: 'reviews',
                 element: < Resenia />
+            },
+            {
+                path: 'store',
+                element: < TiendaCliente />
             }
 
         ]
@@ -70,11 +76,11 @@ export const router = createBrowserRouter([
                 element: <AtenderMascota/>
             },
             {
-                path: 'resenia',
+                path: 'reviews',
                 element: < ReseniaCuidador />
             },
             {
-                path: 'tienda',
+                path: 'store',
                 element: < TiendaCuidador />
             }
         ]
