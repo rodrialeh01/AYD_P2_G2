@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { FaUserLarge } from "react-icons/fa6";
-import SidebarCuidador from "../../../components/Sidebar/SidebarCuidador";
-import Service from "../../../Service/Service";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaUserLarge } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import Service from "../../../Service/Service";
+import SidebarCuidador from "../../../components/Sidebar/SidebarCuidador";
 
 export default function PerfilC() {
   const navigate = useNavigate();
@@ -71,19 +71,19 @@ export default function PerfilC() {
               Mi Perfil
             </h1>
           </div>
-          <div class="flex items-center justify-center p-12">
-            <div class="mx-auto w-full max-w-[550px]">
+          <div className="flex items-center justify-center p-12">
+            <div className="mx-auto w-full max-w-[550px]">
               <form>
-                <div class="mb-5 pt-3">
-                  <label class="mb-5 block text-base font-semibold text-black  sm:text-xl">
+                <div className="mb-5 pt-3">
+                  <label className="mb-5 block text-base font-semibold text-black  sm:text-xl">
                     Nombre Completo
                   </label>
-                  <div class="-mx-3 flex flex-wrap">
-                    <div class="w-full px-3 sm:w-1/2">
-                      <div class="mb-5">
+                  <div className="-mx-3 flex flex-wrap">
+                    <div className="w-full px-3 sm:w-1/2">
+                      <div className="mb-5">
                         <label
-                          for="name"
-                          class="mb-3 block text-base font-medium text-black "
+                          htmlFor="name"
+                          className="mb-3 block text-base font-medium text-black "
                         >
                           Nombre
                         </label>
@@ -92,11 +92,11 @@ export default function PerfilC() {
                         </h2>
                       </div>
                     </div>
-                    <div class="w-full px-3 sm:w-1/2">
-                      <div class="mb-5">
+                    <div className="w-full px-3 sm:w-1/2">
+                      <div className="mb-5">
                         <label
-                          for="name"
-                          class="mb-3 block text-base font-medium text-black "
+                          htmlFor="name"
+                          className="mb-3 block text-base font-medium text-black "
                         >
                           Apellido
                         </label>
@@ -107,10 +107,10 @@ export default function PerfilC() {
                     </div>
                   </div>
                 </div>
-                <div class="mb-5">
+                <div className="mb-5">
                   <label
-                    for="phone"
-                    class="mb-3 block text-base font-medium text-black "
+                    htmlFor="phone"
+                    className="mb-3 block text-base font-medium text-black "
                   >
                     Número de Teléfono
                   </label>
@@ -118,29 +118,29 @@ export default function PerfilC() {
                     +502 {dataUser.phone}
                   </h2>
                 </div>
-                <div class="mb-5">
+                <div className="mb-5">
                   <label
-                    for="email"
-                    class="mb-3 block text-base font-medium text-black "
+                    htmlFor="email"
+                    className="mb-3 block text-base font-medium text-black "
                   >
                     Dirección de correo electrónico
                   </label>
                   <h2 className="text-4xl text-zinc-700  font-light"> {dataUser.email} </h2>
                 </div>
 
-                <div class="mb-5">
+                <div className="mb-5">
                   <label
-                    for="date"
-                    class="mb-3 block text-base font-medium text-black "
+                    htmlFor="date"
+                    className="mb-3 block text-base font-medium text-black "
                   >
                     Fecha de Nacimiento
                   </label>
                   <h2 className="text-4xl text-zinc-700  font-light">{dataUser.birthDate}</h2>
                 </div>
-                <div class="mb-5">
+                <div className="mb-5">
                   <label
-                    for="email"
-                    class="mb-3 block text-base font-medium text-black "
+                    htmlFor="email"
+                    className="mb-3 block text-base font-medium text-black "
                   >
                     Rol
                   </label>

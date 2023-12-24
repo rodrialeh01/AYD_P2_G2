@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import SidebarCuidador from "../../components/Sidebar/SidebarCuidador";
-import { FaUserLarge } from "react-icons/fa6";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import Service from "../../Service/Service";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { FaUserLarge } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import Service from "../../Service/Service";
+import SidebarCuidador from "../../components/Sidebar/SidebarCuidador";
 export default function ReseniaCuidador() {
   const [reviews, setReviews] = useState([]);
   const usuario = JSON.parse(localStorage.getItem("data_user"));
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     if (!usuario) {
       navigate("/");
@@ -112,8 +114,8 @@ export default function ReseniaCuidador() {
                 {/*Reseñas*/}
                 {loading ? null : (
                   <div>
-                    {reviews.map((review) => (
-                      <div className="bg-white h-[200px] w-full mb-6 rounded-md border-black border-2 shadow-md">
+                    {reviews.map((review, index) => (
+                      <div key={index} className="bg-white h-[200px] w-full mb-6 rounded-md border-black border-2 shadow-md">
                         <div className="h-2/6 w-full flex flex-row justify-between items-center px-4 border-b-2 border-black">
                           <div className="h-full w-1/2 flex flex-row justify-start items-center">
                             <FaUserLarge className="w-12 h-12 mr-4" />
