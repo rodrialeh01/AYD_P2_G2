@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GiDogHouse } from "react-icons/gi";
 import { MdPets } from "react-icons/md";
+import { SiDatadog } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Service from "../../Service/Service";
 import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 import { useUser } from "../../userCtx/User";
@@ -10,8 +13,9 @@ const MisMascotas = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [fechaFinHospedaje, setFechaFinHospedaje] = useState("");
     const [idMascota, setIdMascota] = useState("");
-    const { logged, setLogged } = useUser();
+    const { logged } = useUser();
     const [mascotas, setMascotas] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         if (!logged) {
             navigate("/")
@@ -29,7 +33,7 @@ const MisMascotas = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [logged]);
 
     const handleCloseModal = () => {
         setIdMascota("");
@@ -90,6 +94,38 @@ const MisMascotas = () => {
         });
     }
 
+    const cambiarBotonRecoger = (estado) => {
+        console.log(estado);
+        return String(estado).toLowerCase() === "listo para recoger"
+    }
+
+    const RecogerMascota = (id) => {
+        Service.pickPet(id)
+        .then((res) => {
+            console.log(res.data);
+            Swal.fire({
+                title: "Recogido!",
+                text: "Gracias por hospedar a tu mascota en Huellita Feliz!, esperemos regreses nuevamente!.",
+                icon: "success"
+              });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.error("Error al recoger mascota", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined, 
+            });
+        });
+    }
+
     return(
         <div className="flex bg-azul3">
             <Toaster />
@@ -105,7 +141,7 @@ const MisMascotas = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-6">
                 {mascotas.map((mascota, index) => (
                     mascota.especie.toLowerCase() === "perro" ? (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/72/ef/b6/72efb6fe3a22146a7b2d26aff93cc55a.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>
@@ -118,18 +154,28 @@ const MisMascotas = () => {
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Fin de hospedaje: </span><span className="text-base">{mascota.fecha_devolucion}</span><br/></span>
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado:'En espera de ser atendida'}</span>
                             </p>
+                            {cambiarBotonRecoger(mascota.estado)?
                             <button
+                            className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                            type="button"
+                            onClick={() => RecogerMascota(mascota._id)}
+                            >
+                            <SiDatadog className="text-2xl inline-block mr-2" />Recoger a mi mascota
+                            </button>
+                            :
+                            <button
+                            data-test-id={`btn-hospedar-${index}`}
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
                             disabled={mascota.is_hospedada}
                             onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
-                            </button>
+                            </button>}
                         </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/b0/8a/66/b08a66bd6a5d35b3d9a1bc11ebbcca83.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>
@@ -140,16 +186,26 @@ const MisMascotas = () => {
                             <span className="font-bold">Contacto del Veterinario: </span><span className="text-base">{mascota.contacto_veterinario}</span><br/>
                             <span className="font-bold">Comentarios: </span><span className="text-sm">{mascota.comentarios_extra}</span><br/>
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Fin de hospedaje: </span><span className="text-base">{mascota.fecha_devolucion}</span><br/></span>
-                            <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado:'En espera de ser atendida'}</span>
+                            <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado!=='Listo para recoger'? 'En espera de ser atendida':mascota.estado:''}</span>
                             </p>
+                            {cambiarBotonRecoger(mascota.estado)?
+                            <button
+                            className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                            type="button"
+                            onClick={() => RecogerMascota(mascota._id)}
+                            >
+                            <SiDatadog className="text-2xl inline-block mr-2" />Recoger a mi mascota
+                            </button>
+                            :
                             <button
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
                             disabled={mascota.is_hospedada}
+                            data-test-id={`btn-hospedar-${index}`}
                             onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
-                            </button>
+                            </button>}
                         </div>
                         </div>
                     )
@@ -178,6 +234,7 @@ const MisMascotas = () => {
                         type="date"
                         id="fecha"
                         name="fecha"
+                        data-test-id="input-fecha"
                         min={new Date().toISOString().split("T")[0]}
                         onChange={handleDateChange}
                         className="w-full p-2 border border-gray-300 rounded"
@@ -188,6 +245,7 @@ const MisMascotas = () => {
                         type="button"
                         className="bg-green-500 text-white p-2 mr-2 rounded hover:bg-blue-700"
                         onClick={hospedarMascota}
+                        data-test-id="btn-hospedar-accept"
                     >Hospedar</button>
 
                     <button

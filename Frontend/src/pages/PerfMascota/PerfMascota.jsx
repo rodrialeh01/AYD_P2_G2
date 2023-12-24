@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import SidebarCliente from "../../components/Sidebar/SidebarCliente";
-import Select from "react-select";
-import { FaShieldDog } from "react-icons/fa6";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { FaShieldDog } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import Service from "../../Service/Service";
+import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 export default function PerfMascota() {
   const [input, setInput] = useState({
     nombre: "",
@@ -108,7 +108,7 @@ export default function PerfMascota() {
 
   return (
     <>
-      <div class="h-full w-full overflow-y-auto bg-gradient-to-tr from-azul4/90 to-azul3 ">
+      <div className="h-full w-full overflow-y-auto bg-gradient-to-tr from-azul4/90 to-azul3 ">
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto outline-none focus:outline-none ">
           <Toaster />
           <SidebarCliente />
@@ -126,19 +126,20 @@ export default function PerfMascota() {
 
                 <form>
                   <div className="relative p-6 flex-auto">
-                    <div class="w-full ">
-                      <div class="md:flex md:items-center mb-6">
-                        <div class="">
+                    <div className="w-full ">
+                      <div className="md:flex md:items-center mb-6">
+                        <div className="">
                           <label
-                            class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                            for="inline-full-name"
+                            className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                            htmlFor="inline-full-name"
                           >
                             Nombre:
                           </label>
                         </div>
-                        <div class="w-full mr-[250px]">
+                        <div className="w-full mr-[250px]">
                           <input
-                            class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            data-test-id="cypress-input-petName"
+                            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
                             name="nombre"
@@ -147,17 +148,18 @@ export default function PerfMascota() {
                           ></input>
                         </div>
                       </div>
-                      <div class="md:flex md:items-center mb-6">
-                        <div class="">
+                      <div className="md:flex md:items-center mb-6">
+                        <div className="">
                           <label
-                            class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                            for="inline-full-name"
+                            className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                            htmlFor="inline-full-name"
                           >
                             Especie:
                           </label>
                         </div>
-                        <div class="w-full mr-[250px]">
+                        <div className="w-full mr-[250px]">
                           <Select
+                            
                             className="py-2 px-3 rounded-2xl w-full"
                             classNamePrefix="select"
                             defaultValue={options[0]}
@@ -166,22 +168,25 @@ export default function PerfMascota() {
                             name="especie"
                             id="especie"
                             required
+                            inputId="especie"
+                            data-test-id="cypress-input-species"
                           />
                         </div>
                       </div>
 
-                      <div class="md:flex md:items-center mb-6">
-                        <div class="">
+                      <div className="md:flex md:items-center mb-6">
+                        <div className="">
                           <label
-                            class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                            for="inline-full-name"
+                            className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                            htmlFor="inline-full-name"
                           >
                             Raza:
                           </label>
                         </div>
-                        <div class="w-full mr-[250px]">
+                        <div className="w-full mr-[250px]">
                           <input
-                            class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            data-test-id="cypress-input-breed"
+                            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
                             name="raza"
@@ -192,18 +197,19 @@ export default function PerfMascota() {
                       </div>
 
                       <div className="columns-2 gap-1">
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Edad:
                             </label>
                           </div>
-                          <div class="w-full mr-[50px]">
+                          <div className="w-full mr-[50px]">
                             <input
-                              class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              data-test-id="cypress-input-age"
+                              className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="number"
                               name="edad"
@@ -212,18 +218,19 @@ export default function PerfMascota() {
                             ></input>
                           </div>
                         </div>
-                        <div class="md:flex md:items-center mb-6">
-                          <div class="">
+                        <div className="md:flex md:items-center mb-6">
+                          <div className="">
                             <label
-                              class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                              for="inline-full-name"
+                              className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                              htmlFor="inline-full-name"
                             >
                               Contacto Veterinario:
                             </label>
                           </div>
-                          <div class="w-full mr-[50px]">
+                          <div className="w-full mr-[50px]">
                             <input
-                              class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                              data-test-id="cypress-input-vetContact"
+                              className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
                               name="contacto_veterinario"
@@ -233,18 +240,19 @@ export default function PerfMascota() {
                           </div>
                         </div>
                       </div>
-                      <div class="md:flex md:items-center mb-6">
-                        <div class="">
+                      <div className="md:flex md:items-center mb-6">
+                        <div className="">
                           <label
-                            class="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
-                            for="inline-full-name"
+                            className="block text-white font-bold md:text-left mb-1 md:mb-0 pr-4"
+                            htmlFor="inline-full-name"
                           >
                             Comportamiento:
                           </label>
                         </div>
-                        <div class="w-full mr-[50px]">
+                        <div className="w-full mr-[50px]">
                           <input
-                            class="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            data-test-id="cypress-input-behavior"
+                            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
                             name="comportamiento"
@@ -254,16 +262,17 @@ export default function PerfMascota() {
                         </div>
                       </div>
                       <label
-                        class="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
-                        for="inline-full-name"
+                        className="block text-white font-bold md:text-left mb-1 md:mb-2 pr-4"
+                        htmlFor="inline-full-name"
                       >
                         Comentarios extra:
                       </label>
-                      <div class="md:flex md:items-center mb-6">
-                        <div class=""></div>
-                        <div class="w-full ">
+                      <div className="md:flex md:items-center mb-6">
+                        <div className=""></div>
+                        <div className="w-full ">
                           <textarea
-                            class="bg-white appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            data-test-id="cypress-input-extraComments"
+                            className="bg-white appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
                             name="comentarios_extra"
@@ -278,6 +287,7 @@ export default function PerfMascota() {
 
                   <div className="flex items-center justify-end p-1 border-t border-solid border-slate-200 rounded-b">
                     <button
+                      data-test-id="cypress-button-savePet"
                       className="text-white bg-verde3 hover:bg-verde4 transition duration-300 ease-in-out rounded font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="submit"
                       onClick={(e) => handleCrear(e)}

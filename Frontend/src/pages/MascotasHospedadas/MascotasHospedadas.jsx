@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GiDogHouse } from "react-icons/gi";
 import { SiDatadog } from "react-icons/si";
@@ -10,7 +10,7 @@ const MascotasHospedadas = () => {
     const [mascotas, setMascotas] = useState([]);
     const [iduser, setIduser] = useState({});
     const [cantidadMascotasAtendidas, setCantidadMascotasAtendidas] = useState(0);
-    const { logged, setLogged } = useUser();
+    const { logged } = useUser();
     const navigate = useNavigate();
     useEffect(() => {
         if (!logged) {
@@ -35,7 +35,7 @@ const MascotasHospedadas = () => {
         Service.getPets()
         .then((res) => {
             console.log(res.data.data);
-            setMascotas(res.data.data.filter((mascota) => mascota.is_hospedada === true && mascota.is_atendida === false));
+            setMascotas(res.data.data.filter((mascota) => mascota.is_hospedada === true && mascota.is_atendida === false && !filtroestado(mascota.estado)));
         })
         .catch((err) => {
             console.log(err);
@@ -43,6 +43,10 @@ const MascotasHospedadas = () => {
 
 
     }, []);
+
+    const filtroestado = (estado) => {
+        return String(estado).toLowerCase() === "listo para recoger"
+    }
 
     const AtenerMascota = (id) => {
         
@@ -108,7 +112,7 @@ const MascotasHospedadas = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-6">
                 {mascotas.map((mascota, index) => (
                     mascota.especie.toLowerCase() === "perro" ? (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-azul3 dark:bg-azul4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-azul3 dark:bg-azul4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/72/ef/b6/72efb6fe3a22146a7b2d26aff93cc55a.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>
@@ -130,7 +134,7 @@ const MascotasHospedadas = () => {
                         </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-azul3 dark:bg-azul4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-azul3 dark:bg-azul4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/b0/8a/66/b08a66bd6a5d35b3d9a1bc11ebbcca83.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>

@@ -1,4 +1,7 @@
 # 🐶 Huellita Feliz
+
+[![Deployment Pipeline](https://github.com/rodrialeh01/AYD_P2_G2/actions/workflows/pipeline.yml/badge.svg)](https://github.com/rodrialeh01/AYD_P2_G2/actions/workflows/pipeline.yml)
+
 ```json
 {
   "Curso": "Analisis y Diseño de Sistemas 1",

@@ -10,6 +10,10 @@ import Perfil from '../pages/Perfil/Cliente/Perfil';
 import EditarPerfilC from '../pages/Perfil/Cuidador/EditarPerfilC';
 import PerfilC from '../pages/Perfil/Cuidador/PerfilC';
 import Registro from '../pages/Registro/Registro';
+import Resenia from '../pages/Reviews/Resenia';
+import ReseniaCuidador from '../pages/Reviews/ReseniaCuidador';
+import TiendaCliente from '../pages/Tienda/TiendaCliente';
+import TiendaCuidador from '../pages/Tienda/TiendaCuidador';
 
 export const router = createBrowserRouter([
     {
@@ -39,7 +43,16 @@ export const router = createBrowserRouter([
             {
                 path: 'mypets',
                 element: < MisMascotas />
+            },
+            {
+                path: 'reviews',
+                element: < Resenia />
+            },
+            {
+                path: 'store',
+                element: < TiendaCliente />
             }
+
         ]
     },
     {
@@ -61,6 +74,14 @@ export const router = createBrowserRouter([
             {
                 path: 'atention',
                 element: <AtenderMascota/>
+            },
+            {
+                path: 'reviews',
+                element: < ReseniaCuidador />
+            },
+            {
+                path: 'store',
+                element: < TiendaCuidador />
             }
         ]
     }
