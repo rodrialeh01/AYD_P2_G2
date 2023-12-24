@@ -6,7 +6,6 @@ on:
       - develop
 
 jobs:
-
   avoid_reduncy:
     runs-on: ubuntu-22.04
     steps:
@@ -15,55 +14,40 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  lint:
+  install-dependencies:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      
-      - name: Instalando dependencias del Backend
+    
+      - name: Instalando dependencias
         run: npm install
-        working-directory: Backend
+        working-directory: ${{ matrix.directory }}
 
+  lint:
+    needs: install-dependencies
+    runs-on: ubuntu-22.04
+    steps:
       - name: Lint Backend
         run: npm run eslint
         working-directory: Backend
-
-      - name: Instalando dependencias del Frontend
-        run: npm install
-        working-directory: Frontend
 
       - name: Lint Frontend
         run: npm run eslint
         working-directory: Frontend
 
   build:
+    needs: install-dependencies
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      
-      - name: Instalando dependencias del Backend
-        run: npm install
-        working-directory: Backend
-
       - name: Build Backend
         run: npm run build
         working-directory: Backend
-
-      - name: Instalando dependencias del Frontend
-        run: npm install
-        working-directory: Frontend
 
       - name: Build Frontend
         run: npm run build
