@@ -49,15 +49,45 @@ const AtenderMascota = () => {
         });
     }
 
-    const handleProximamente = () => {
-        toast("Proximamente obtendrás esta funcionalidad!", {
-            icon: '😅',
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
+    const mostrarDevolucion = (fecha) => {
+        // Obtener la fecha actual
+        const today = new Date();
+
+        // Parsear la fecha de entrada en formato "dd/mm/yyyy"
+        const [day, month, year] = fecha.split('/').map(Number);
+        const inputDateObject = new Date(year, month - 1, day); // Restar 1 al mes ya que en JavaScript los meses van de 0 a 11
+
+        // Comparar las fechas
+        return today >= inputDateObject;        
+    }
+    const handleDevolverMascota = (id) => {
+        Service.returnPet(id)
+        .then((res) => {
+            console.log(res.data);
+            toast.success("La mascota fue devuelta exitosamente", {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined, 
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.error("Hubo un error al querer devolver a la mascota", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         });
     }
 
@@ -138,11 +168,12 @@ const AtenderMascota = () => {
                                         </li>
                                     </ol>
                                     <div>
-                                        {/*<h2 className='flex items-center justify-center mb-2 text-white'>Llegó el día del fin del hospedaje!</h2>
-                                        <p className='flex items-center justify-center mb-2 text-white text-base font-normal'>Tienes que devolver a la mascota, pasada la fecha se hará automáticamente</p>*/}
-                                        <button className="text-white inline-flex w-full justify-center bg-verde6 hover:bg-verde5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleProximamente}>
-                                        Devolver Mascota
-                                        </button>
+                                        {mostrarDevolucion(mascota.fecha_devolucion)?
+                                        <div><h2 className='flex items-center justify-center mb-2 text-white'>Llegó el día del fin del hospedaje!</h2>
+                                        <p className='flex items-center justify-center mb-2 text-white text-base font-normal'>Tienes que devolver a la mascota</p>
+                                        <button className="text-white inline-flex w-full justify-center bg-verde6 hover:bg-verde5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => handleDevolverMascota(mascota._id)}>
+                                        Devolver Mascotas
+                                        </button></div> :<></>}
                                     </div>
                                 </div>
                             </div>
@@ -212,11 +243,12 @@ const AtenderMascota = () => {
                                         </li>
                                     </ol>
                                     <div>
-                                    {/*<h2 className='flex items-center justify-center mb-2 text-white'>Llegó el día del fin del hospedaje!</h2>
-                                        <p className='flex items-center justify-center mb-2 text-white text-base font-normal'>Tienes que devolver a la mascota, pasada la fecha se hará automáticamente</p>*/}
-                                        <button className="text-white inline-flex w-full justify-center bg-verde6 hover:bg-verde5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={handleProximamente}>
-                                        Devolver Mascota
-                                        </button>
+                                        {mostrarDevolucion(mascota.fecha_devolucion)?
+                                        <div><h2 className='flex items-center justify-center mb-2 text-white'>Llegó el día del fin del hospedaje!</h2>
+                                        <p className='flex items-center justify-center mb-2 text-white text-base font-normal'>Tienes que devolver a la mascota</p>
+                                        <button className="text-white inline-flex w-full justify-center bg-verde6 hover:bg-verde5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => handleDevolverMascota(mascota._id)}>
+                                        Devolver Mascotas
+                                        </button></div> :<></>}
                                     </div>
                                 </div>
                             </div>

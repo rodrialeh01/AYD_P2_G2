@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaShieldDog, FaUserLarge } from "react-icons/fa6";
+import { FaShieldDog, FaStore, FaUserLarge } from "react-icons/fa6";
+import { FiMessageCircle } from "react-icons/fi";
 import { IoLogOut } from "react-icons/io5";
 import { MdPets } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +31,16 @@ const SidebarCliente = () => {
             name: "Mis Mascotas",
             icon: <MdPets className="text-3xl"/>,
             path: "/user/mypets",
+        },
+        {
+            name: "Tienda",
+            icon: <FaStore className="text-3xl"/>,
+            path: "/user/store",
+        },
+        {
+            name: "Reseñas",
+            icon: <FiMessageCircle className="text-3xl"/>,
+            path: "/user/reviews",
         }
     ]
     const navigate = useNavigate();

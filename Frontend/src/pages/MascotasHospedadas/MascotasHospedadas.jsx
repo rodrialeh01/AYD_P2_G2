@@ -35,7 +35,7 @@ const MascotasHospedadas = () => {
         Service.getPets()
         .then((res) => {
             console.log(res.data.data);
-            setMascotas(res.data.data.filter((mascota) => mascota.is_hospedada === true && mascota.is_atendida === false));
+            setMascotas(res.data.data.filter((mascota) => mascota.is_hospedada === true && mascota.is_atendida === false && !filtroestado(mascota.estado)));
         })
         .catch((err) => {
             console.log(err);
@@ -43,6 +43,10 @@ const MascotasHospedadas = () => {
 
 
     }, []);
+
+    const filtroestado = (estado) => {
+        return String(estado).toLowerCase() === "listo para recoger"
+    }
 
     const AtenerMascota = (id) => {
         
