@@ -29,13 +29,12 @@ jobs:
     needs: install-dependencies
     runs-on: ubuntu-22.04
     steps:
-      - name: Lint Backend
-        run: npm run eslint
-        working-directory: Backend
-
       - name: Lint Frontend
         run: npm run eslint
         working-directory: Frontend
+      - name: Lint Backend
+        run: npm run eslint
+        working-directory: Backend
 
   build:
     needs: install-dependencies
