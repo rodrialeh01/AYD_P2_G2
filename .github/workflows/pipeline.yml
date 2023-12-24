@@ -21,7 +21,7 @@ jobs:
         run: cd Frontend
 
       - name: Instalando dependencias
-        run: npm install --no-audit --no-fund --no-optional
+        run: npm install
         working-directory: Frontend
 
       - name: Lint
