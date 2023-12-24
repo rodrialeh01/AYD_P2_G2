@@ -121,6 +121,7 @@ const MisMascotas = () => {
                             <span className={`${mascota.is_hospedada?'':'hidden'}`}><span className="font-bold">Estado: </span>{mascota.is_atendida?mascota.estado:'En espera de ser atendida'}</span>
                             </p>
                             <button
+                            data-test-id={`btn-hospedar-${index}`}
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
                             disabled={mascota.is_hospedada}
@@ -148,6 +149,7 @@ const MisMascotas = () => {
                             className="mb-2 sm:mb-0 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-azul4 hover:bg-azul5 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                             type="button"
                             disabled={mascota.is_hospedada}
+                            data-test-id={`btn-hospedar-${index}`}
                             onClick={() => handleHospedarModel(mascota._id)}
                             >
                             <GiDogHouse className="text-2xl inline-block mr-2" /> {mascota.is_hospedada?'Hospedado':'Hospedar'}
@@ -180,6 +182,7 @@ const MisMascotas = () => {
                         type="date"
                         id="fecha"
                         name="fecha"
+                        data-test-id="input-fecha"
                         min={new Date().toISOString().split("T")[0]}
                         onChange={handleDateChange}
                         className="w-full p-2 border border-gray-300 rounded"
@@ -190,6 +193,7 @@ const MisMascotas = () => {
                         type="button"
                         className="bg-green-500 text-white p-2 mr-2 rounded hover:bg-blue-700"
                         onClick={hospedarMascota}
+                        data-test-id="btn-hospedar-accept"
                     >Hospedar</button>
 
                     <button

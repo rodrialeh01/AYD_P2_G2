@@ -138,6 +138,7 @@ export default function PerfMascota() {
                         </div>
                         <div className="w-full mr-[250px]">
                           <input
+                            data-test-id="cypress-input-petName"
                             className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
@@ -158,6 +159,7 @@ export default function PerfMascota() {
                         </div>
                         <div className="w-full mr-[250px]">
                           <Select
+                            
                             className="py-2 px-3 rounded-2xl w-full"
                             classNamePrefix="select"
                             defaultValue={options[0]}
@@ -166,6 +168,8 @@ export default function PerfMascota() {
                             name="especie"
                             id="especie"
                             required
+                            inputId="especie"
+                            data-test-id="cypress-input-species"
                           />
                         </div>
                       </div>
@@ -181,6 +185,7 @@ export default function PerfMascota() {
                         </div>
                         <div className="w-full mr-[250px]">
                           <input
+                            data-test-id="cypress-input-breed"
                             className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
@@ -203,6 +208,7 @@ export default function PerfMascota() {
                           </div>
                           <div className="w-full mr-[50px]">
                             <input
+                              data-test-id="cypress-input-age"
                               className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="number"
@@ -223,6 +229,7 @@ export default function PerfMascota() {
                           </div>
                           <div className="w-full mr-[50px]">
                             <input
+                              data-test-id="cypress-input-vetContact"
                               className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                               id="inline-full-name"
                               type="text"
@@ -244,6 +251,7 @@ export default function PerfMascota() {
                         </div>
                         <div className="w-full mr-[50px]">
                           <input
+                            data-test-id="cypress-input-behavior"
                             className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
@@ -263,6 +271,7 @@ export default function PerfMascota() {
                         <div className=""></div>
                         <div className="w-full ">
                           <textarea
+                            data-test-id="cypress-input-extraComments"
                             className="bg-white appearance-none h-20 overflow-y-auto border-2 border-gray-200 rounded w-full py- px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
@@ -278,6 +287,7 @@ export default function PerfMascota() {
 
                   <div className="flex items-center justify-end p-1 border-t border-solid border-slate-200 rounded-b">
                     <button
+                      data-test-id="cypress-button-savePet"
                       className="text-white bg-verde3 hover:bg-verde4 transition duration-300 ease-in-out rounded font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="submit"
                       onClick={(e) => handleCrear(e)}

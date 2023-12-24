@@ -68,7 +68,7 @@ export default function Perfil() {
         <SidebarCliente />
         <div className="p-7 text-2xl font-semibold flex-1 h-screen overflow-y-scroll scrollbar-hide  border-l-2 border-white">
           <div>
-            <h1 className="text-white text-3xl">
+            <h1 className="text-white text-3xl" data-test-id="title">
               <FaUserLarge className="text-3xl inline-block mr-2" />
               Mi Perfil
             </h1>
