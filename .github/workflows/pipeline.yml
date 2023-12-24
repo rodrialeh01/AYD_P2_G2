@@ -1,0 +1,23 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - feature-201900042
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Ir a Frontend
+        run: cd Frontend
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalando dependencias
+        run: npm install
+      - name: ejecucion de pruebas
+        run: npm run dev
