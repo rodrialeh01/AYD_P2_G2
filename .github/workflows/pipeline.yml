@@ -21,15 +21,11 @@ jobs:
         run: cd Frontend
 
       - name: Instalando dependencias
-        run: npm install --no-audit --no-fund --no-optional
+        run: npm install
         working-directory: Frontend
 
       - name: Lint
         run: npm run eslint
-        working-directory: Frontend
-
-      - name: ejecucion de pruebas
-        run: npm run dev
         working-directory: Frontend
 
       - name: Build
