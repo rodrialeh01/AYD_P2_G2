@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { FaUserLarge } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import Service from "../../../Service/Service";
-import toast, { Toaster } from "react-hot-toast";
 import SidebarCliente from "../../../components/Sidebar/SidebarCliente";
 const EditProfile = () => {
 
@@ -174,23 +174,23 @@ const EditProfile = () => {
             Editar Mi Perfil
           </h1>
         </div>
-        <div class="flex items-center justify-center p-12">
-          <div class="mx-auto w-full max-w-[550px]">
+        <div className="flex items-center justify-center p-12">
+          <div className="mx-auto w-full max-w-[550px]">
             <form
               onSubmit={(e) => {
                 handleEditar(e);
               }}
             >
-              <div class="mb-5 pt-3">
-                <label class="mb-5 block text-base font-semibold text-white sm:text-xl">
+              <div className="mb-5 pt-3">
+                <label className="mb-5 block text-base font-semibold text-white sm:text-xl">
                   Nombre Completo
                 </label>
-                <div class="-mx-3 flex flex-wrap">
-                  <div class="w-full px-3 sm:w-1/2">
-                    <div class="mb-5">
+                <div className="-mx-3 flex flex-wrap">
+                  <div className="w-full px-3 sm:w-1/2">
+                    <div className="mb-5">
                       <label
-                        for="name"
-                        class="mb-3 block text-base font-medium text-white"
+                        htmlFor="name"
+                        className="mb-3 block text-base font-medium text-white"
                       >
                         Nombre
                       </label>
@@ -202,15 +202,15 @@ const EditProfile = () => {
                         defaultValue={userDetails.name}
                         onChange={handleInputChange}
                         required
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
                   </div>
-                  <div class="w-full px-3 sm:w-1/2">
-                    <div class="mb-5">
+                  <div className="w-full px-3 sm:w-1/2">
+                    <div className="mb-5">
                       <label
-                        for="name"
-                        class="mb-3 block text-base font-medium text-white"
+                        htmlFor="name"
+                        className="mb-3 block text-base font-medium text-white"
                       >
                         Apellido
                       </label>
@@ -222,16 +222,16 @@ const EditProfile = () => {
                         defaultValue={userDetails.lastName}
                         onChange={handleInputChange}
                         required
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="mb-5">
+              <div className="mb-5">
                 <label
-                  for="phone"
-                  class="mb-3 block text-base font-medium text-white"
+                  htmlFor="phone"
+                  className="mb-3 block text-base font-medium text-white"
                 >
                   Número de Teléfono
                 </label>
@@ -243,13 +243,13 @@ const EditProfile = () => {
                   defaultValue={userDetails.phone}
                   onChange={handleInputChange}
                   required
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
-              <div class="mb-5">
+              <div className="mb-5">
                 <label
-                  for="email"
-                  class="mb-3 block text-base font-medium text-white"
+                  htmlFor="email"
+                  className="mb-3 block text-base font-medium text-white"
                 >
                   Dirección de correo electrónico
                 </label>
@@ -261,13 +261,13 @@ const EditProfile = () => {
                   defaultValue={userDetails.email}
                   onChange={handleInputChange}
                   disabled={true}
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
-              <div class="mb-5">
+              <div className="mb-5">
                 <label
-                  for="name"
-                  class="mb-3 block text-base font-medium text-white"
+                  htmlFor="name"
+                  className="mb-3 block text-base font-medium text-white"
                 >
                   Contraseña
                 </label>
@@ -279,14 +279,14 @@ const EditProfile = () => {
                   defaultValue={userDetails.password}
                   onChange={handleInputChange}
 
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
 
-              <div class="mb-5">
+              <div className="mb-5">
                 <label
-                  for="date"
-                  class="mb-3 block text-base font-medium text-white"
+                  htmlFor="date"
+                  className="mb-3 block text-base font-medium text-white"
                 >
                   Fecha de Nacimiento
                 </label>
@@ -297,7 +297,7 @@ const EditProfile = () => {
                   defaultValue={userDetails.birthDate}
                   onChange={handleInputChange}
                   required
-                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
 
@@ -310,7 +310,7 @@ const EditProfile = () => {
                   Aplicar Cambios
                 </button>
                 <button
-                  class="hover:shadow-form w-full rounded-md bg-white py-3 px-8 text-center text-base font-semibold text-rojo2 outline-none"
+                  className="hover:shadow-form w-full rounded-md bg-white py-3 px-8 text-center text-base font-semibold text-rojo2 outline-none"
                   onClick={handlerRegresar}
                 >
                   Regresar

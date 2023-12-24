@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GiDogHouse } from "react-icons/gi";
 import { MdPets } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import Service from "../../Service/Service";
 import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 import { useUser } from "../../userCtx/User";
@@ -10,8 +11,9 @@ const MisMascotas = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [fechaFinHospedaje, setFechaFinHospedaje] = useState("");
     const [idMascota, setIdMascota] = useState("");
-    const { logged, setLogged } = useUser();
+    const { logged } = useUser();
     const [mascotas, setMascotas] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         if (!logged) {
             navigate("/")
@@ -29,7 +31,7 @@ const MisMascotas = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [logged]);
 
     const handleCloseModal = () => {
         setIdMascota("");
@@ -105,7 +107,7 @@ const MisMascotas = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gris-cols-3 xl:grid-cols-3 gap-6">
                 {mascotas.map((mascota, index) => (
                     mascota.especie.toLowerCase() === "perro" ? (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/72/ef/b6/72efb6fe3a22146a7b2d26aff93cc55a.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>
@@ -129,7 +131,7 @@ const MisMascotas = () => {
                         </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
+                        <div key={index} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-verde3 dark:bg-verde4">
                         <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://i.pinimg.com/originals/b0/8a/66/b08a66bd6a5d35b3d9a1bc11ebbcca83.png" alt=""/>
                         <div className="flex flex-col justify-between p-4 leading-normal">
                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{mascota.nombre}</h5>

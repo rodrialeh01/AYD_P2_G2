@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserLarge } from "react-icons/fa6";
 import { GiDogHouse } from "react-icons/gi";
 import { IoLogOut } from "react-icons/io5";
@@ -13,7 +13,6 @@ const SidebarCuidador = () => {
     useEffect(() => {
         console.log(logged);
         if (logged) {
-          const user = JSON.parse(localStorage.getItem("data_user"));
           console.log(localStorage.getItem('data_user'));
         }
     }, [logged]);

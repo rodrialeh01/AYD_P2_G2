@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Service from "../../Service/Service";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../userCtx/User.jsx";
 import "./Login.css";
 
