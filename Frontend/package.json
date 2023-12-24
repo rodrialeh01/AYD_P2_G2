@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "cypress:open": "cypress open"
-    "preview": "vite preview"
-    "eslint": "eslint . --ext js,jsx --fix",
+    "cypress:open": "cypress open",
+    "preview": "vite preview",
+    "eslint": "eslint . --ext js,jsx --fix"
   },
   "dependencies": {
     "@smastrom/react-rating": "^1.4.0",
