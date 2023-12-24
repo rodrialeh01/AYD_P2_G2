@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaUserLarge } from "react-icons/fa6";
+import { FaStore, FaUserLarge } from "react-icons/fa6";
+import { FiMessageCircle } from "react-icons/fi";
 import { GiDogHouse } from "react-icons/gi";
 import { IoLogOut } from "react-icons/io5";
 import { SiDatadog } from "react-icons/si";
@@ -32,6 +33,16 @@ const SidebarCuidador = () => {
             name: "Atención a Mascotas",
             icon: <SiDatadog className="text-3xl"/>,
             path: "/petcare/atention",
+        },
+        {
+            name: "Tienda",
+            icon: <FaStore className="text-3xl"/>,
+            path: "/petcare/store",
+        },
+        {
+            name: "Reseñas",
+            icon: <FiMessageCircle className="text-3xl"/>,
+            path: "/petcare/reviews",
         }
     ]
     const navigate = useNavigate();

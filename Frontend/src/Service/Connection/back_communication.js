@@ -107,6 +107,26 @@ export const updateStatus = async (data) => {
     return response;
 }
 
+//Devolver mascota
+export const returnPet = async (id) => {
+    const response = await instance.post(`/pet/devolver/${id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+//Recoger mascota
+export const pickPet = async (id) => {
+    const response = await instance.post(`/pet/recoger/${id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
 // Obtener reseñas
 export const getReviews = async () => {
     const response = await instance.get(`review/reviews`);
