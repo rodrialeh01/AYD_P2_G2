@@ -1,0 +1,13 @@
+name: Say hello
+
+on:
+  push:
+    branches:
+      - feature-201900042
+
+jobs:
+  hello_world:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Hello world
+        run: echo "Hello Rodri"
