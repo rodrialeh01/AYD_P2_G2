@@ -66,7 +66,7 @@ export default function PerfilC() {
         <SidebarCuidador />
         <div className="p-7 text-2xl font-semibold flex-1 h-screen overflow-y-scroll scrollbar-hide  border-l-2 border-white">
           <div>
-            <h1 className="text-zinc-700  text-3xl">
+            <h1 className="text-zinc-700  text-3xl" data-test-id="cypress-header-profileC">
               <FaUserLarge className="text-3xl inline-block mr-2" />
               Mi Perfil
             </h1>

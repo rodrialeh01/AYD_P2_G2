@@ -223,6 +223,7 @@ export default function Resenia() {
                             {review.mine ? (
                               <button className="h-8 w-8 ml-4 text-red-400 hover:text-red-900 rounded-full flex justify-center items-center"
                               onClick={() => handleEliminar(review._id)}
+                              data-test-id={`cypress-delete-${index}`}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -272,6 +273,7 @@ export default function Resenia() {
                       <Rating
                         style={{ maxWidth: 180 }}
                         value={reviewData.qualification}
+                        id="data-test-id"
                         onChange={(value) => {
                           setReviewData({
                             ...reviewData,
@@ -283,6 +285,7 @@ export default function Resenia() {
                     <button
                       className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
                       onClick={(e) => handleSubmit(e)}
+                      data-test-id="cypress-review-submit"
                     >
                       Enviar
                     </button>
@@ -303,6 +306,7 @@ export default function Resenia() {
                       id="inline-full-name"
                       type="text"
                       name="comment"
+                      data-test-id="cypress-review-comment"
                       placeholder="Reseña"
                       value={reviewData.comment}
                       onChange={(e) => handleInputChange(e)}
