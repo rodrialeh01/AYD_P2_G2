@@ -4,6 +4,7 @@ import { GiDogHouse } from "react-icons/gi";
 import { MdPets } from "react-icons/md";
 import { SiDatadog } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Service from "../../Service/Service";
 import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 import { useUser } from "../../userCtx/User";
@@ -102,15 +103,11 @@ const MisMascotas = () => {
         Service.pickPet(id)
         .then((res) => {
             console.log(res.data);
-            toast.success("Tu mascota se recogió con exito!", {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined, 
-            });
+            Swal.fire({
+                title: "Recogido!",
+                text: "Gracias por hospedar a tu mascota en Huellita Feliz!, esperemos regreses nuevamente!.",
+                icon: "success"
+              });
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
