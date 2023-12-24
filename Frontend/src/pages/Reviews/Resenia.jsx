@@ -1,16 +1,174 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import SidebarCliente from "../../components/Sidebar/SidebarCliente";
 import { FaUserLarge } from "react-icons/fa6";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import toast, { Toaster } from "react-hot-toast";
+import Service from "../../Service/Service";
+import { useNavigate } from "react-router-dom";
 
 export default function Resenia() {
-    const [rating, setRating] = useState(3);
+  const [reviews, setReviews] = useState([]);
+  const usuario = JSON.parse(localStorage.getItem("data_user"));
+  const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState("");
+  const navigate = useNavigate();
+
+  const [reviewData, setReviewData] = useState({
+    idUser: "",
+    comment: "",
+    qualification: 0,
+  });
+
+  useEffect(() => {
+    if (!usuario) {
+      navigate("/");
+    }
+
+    if (usuario.rol !== 1) {
+      navigate("/");
+    }
+    obtenerReviews();
+    
+  }, [response]);
+
+  const obtenerReviews = async () => {
+    try {
+      const res = await Service.getReviews();
+      if (res.status === 200) {
+        const updatedReviews = await Promise.all(res.data.data.map(
+          async (review) => {
+          try {
+            const resUser = await Service.getUser(review.idUser._id);
+            const users = resUser.data.data;
+
+            const mine =
+              JSON.parse(localStorage.getItem("data_user")).id === users._id;
+            return {
+              ...review,
+              mine,
+            };
+          } catch (error) {
+            toast.error("Error al obtener los datos del usuario", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+
+            console.log(error);
+          }
+        }));
+
+        setReviews(updatedReviews);
+        if (reviews.length > 0) {
+          setLoading(false);
+        }
+      }
+    } catch (error) {
+      toast.error("Error al obtener las reseñas", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      console.log(error);
+    }
+
+    setResponse("reviews");
+
+  };
+
+  const handleInputChange = (event) => {
+    setReviewData({
+      ...reviewData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(reviewData);
+    try {
+      reviewData.idUser = JSON.parse(localStorage.getItem("data_user")).id;
+
+      const res = await Service.createReview(reviewData);
+      if (res.status === 200) {
+        toast.success("Reseña creada exitosamente", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        setResponse("review");
+      }
+    } catch (error) {
+      toast.error("Error al crear la reseña", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      console.log(error);
+    }
+
+    setReviewData({
+      idUser: "",
+      comment: "",
+      qualification: 0,
+    });
+
+  };
+
+  const handleEliminar = async (id) => {
+
+    try {
+      const res = await Service.deleteReview(id);
+      if (res.status === 200) {
+        toast.success("Reseña eliminada exitosamente", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        setResponse("DeleteReview");
+      }
+    }
+    catch (error) {
+      toast.error("Error al eliminar la reseña", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      console.log(error);
+    }
+
+  };
+
 
   return (
     <div>
       <div className="flex h-screen">
         <SidebarCliente />
+        <Toaster />
         <div className="rows-2 w-full border-l-2 border-white">
           <div className="h-2/3 p-2 bg-gradient-to-tr from-azul4/90 to-azul3 border-b-2 border-white">
             <div className="h-1/6">
@@ -36,58 +194,61 @@ export default function Resenia() {
             <div className="h-full w-full">
               <div className="h-5/6 p-6 bg-black/25 w-full overflow-y-auto scrollbar-hide">
                 {/*Reseñas*/}
-                <div className="bg-white h-2/3 w-full mb-6 rounded-md border-black border-2 shadow-md">
-                  <div className="h-2/6 w-full flex flex-row justify-between items-center px-4 border-b-2 border-black">
-                    <div className="h-full w-1/2 flex flex-row justify-start items-center">
-                      <FaUserLarge className="w-12 h-12 mr-4" />
-                      <div className="h-full w-1/2 flex flex-col justify-center items-start">
-                        <h1 className="text-xl font-bold">Nombre</h1>
-                        <h1 className="text-sm">Correo</h1>
+
+                {loading ? null : (
+                  <div>
+                    {reviews.map((review) => (
+                      <div className="bg-white h-[170px] w-full mb-6 rounded-md border-black border-2 shadow-md">
+                        <div className="h-2/6 w-full flex flex-row justify-between items-center px-4 border-b-2 border-black">
+                          <div className="h-full w-1/2 flex flex-row justify-start items-center">
+                            <FaUserLarge className="w-12 h-12 mr-4" />
+                            <div className="h-full w-1/2 flex flex-col justify-center items-start">
+                              <h1 className="text-xl font-bold">
+                                {review.idUser.name +
+                                  " " +
+                                  review.idUser.lastName}
+                              </h1>
+                              <h1 className="text-sm">{review.idUser.email}</h1>
+                            </div>
+                          </div>
+                          <div className="h-full w-1/2 flex flex-row justify-end items-center">
+                            <h1 className="text-xl font-bold">
+                              <Rating
+                                style={{ maxWidth: 180 }}
+                                value={review.qualification}
+                                isDisabled
+                              />
+                            </h1>
+
+                            {review.mine ? (
+                              <button className="h-8 w-8 ml-4 text-red-400 hover:text-red-900 rounded-full flex justify-center items-center"
+                              onClick={() => handleEliminar(review._id)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                  />
+                                </svg>
+                              </button>
+                            ) : null}
+                          </div>
+                        </div>
+                        <div className="h-4/6 w-full px-4 overflow-y-auto scrollbar-hide">
+                          <h1 className="text-xl">{review.comment}</h1>
+                        </div>
                       </div>
-                    </div>
-                    <div className="h-full w-1/2 flex flex-row justify-end items-center">
-                      <h1 className="text-xl font-bold">
-                        <Rating
-                          style={{ maxWidth: 180 }}
-                          value={rating}
-                          isDisabled
-                        />
-                      </h1>
-                      <button className="h-8 w-8 ml-4 text-red-500 rounded-full flex justify-center items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                    ))}
                   </div>
-                  <div className="h-4/6 w-full px-4 overflow-y-auto scrollbar-hide">
-                    <h1 className="text-xl">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam, voluptatum. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Quisquam, voluptatum. Lorem
-                      ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam, voluptatum. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Quisquam, voluptatum. Lorem
-                      ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam, voluptatum. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Quisquam, voluptatum. Lorem
-                      ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam, voluptatum. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Quisquam, voluptatum.
-                    </h1>
-                  </div>
-                </div>
+                )}
 
                 {/*Terminan reseñas*/}
               </div>
@@ -96,7 +257,7 @@ export default function Resenia() {
 
           <div className="h-1/3 p-6 bg-gradient-to-tr from-cyan-500 to-blue-500">
             <div className="h-full">
-              <form className="bg-white h-full px-8 py-6 overflow-y-auto scrollbar-hide rounded-md border-black border-2 shadow-md">
+              <form className="bg-white h-full px-8 py-6 overflow-y-auto scrollbar-hide rounded-md border-black border-2 shadow-md flex flex-col">
                 <div className="md:flex md:items-center mb-4">
                   <div className="mr-4">
                     <label
@@ -106,12 +267,25 @@ export default function Resenia() {
                       Calificación:
                     </label>
                   </div>
-                  <div className="w-full">
-                    <Rating
-                      style={{ maxWidth: 180 }}
-                      value={rating}
-                      onChange={setRating}
-                    />
+                  <div className="w-full flex items-center justify-between">
+                    <div className="mr-4">
+                      <Rating
+                        style={{ maxWidth: 180 }}
+                        value={reviewData.qualification}
+                        onChange={(value) => {
+                          setReviewData({
+                            ...reviewData,
+                            qualification: value,
+                          });
+                        }}
+                      />
+                    </div>
+                    <button
+                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={(e) => handleSubmit(e)}
+                    >
+                      Enviar
+                    </button>
                   </div>
                 </div>
                 <div className="md:flex md:items-center mb-6">
@@ -128,14 +302,12 @@ export default function Resenia() {
                       className="bg-white appearance-none h-20 overflow-y-auto border-2 border-gray-300 rounded w-full py-1 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                       id="inline-full-name"
                       type="text"
-                      name="comentarios_extra"
+                      name="comment"
+                      placeholder="Reseña"
+                      value={reviewData.comment}
+                      onChange={(e) => handleInputChange(e)}
                     ></textarea>
                   </div>
-                </div>
-                <div className="flex justify-end">
-                  <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                    Enviar
-                  </button>
                 </div>
               </form>
             </div>
