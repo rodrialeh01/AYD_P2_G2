@@ -16,18 +16,27 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      
+      - name: Instalando dependencias del Backend
+        run: npm install
+        working-directory: Backend
 
-      - name: Ir a Frontend
-        run: cd Frontend
+      - name: Lint Backend
+        run: npm run eslint
+        working-directory: Backend
 
-      - name: Instalando dependencias
+      - name: Build Backend
+        run: npm run build
+        working-directory: Backend
+
+      - name: Instalando dependencias del Frontend
         run: npm install
         working-directory: Frontend
 
-      - name: Lint
+      - name: Lint Frontend
         run: npm run eslint
         working-directory: Frontend
 
-      - name: Build
+      - name: Build Frontend
         run: npm run build
         working-directory: Frontend
