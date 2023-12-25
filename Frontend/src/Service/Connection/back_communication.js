@@ -180,3 +180,9 @@ export const updateProduct = async (id, data) => {
     });
     return response;
 }
+
+//Eliminar un producto
+export const deleteProduct = async (id) => {
+    const response = await instance.delete(`product/delete/${id}`);
+    return response;
+}
