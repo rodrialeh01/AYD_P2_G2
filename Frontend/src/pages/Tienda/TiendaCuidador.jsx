@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import SidebarCuidador from "../../components/Sidebar/SidebarCuidador";
-import Service from "../../Service/Service";
-import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Service from "../../Service/Service";
+import SidebarCuidador from "../../components/Sidebar/SidebarCuidador";
 
 export default function TiendaCuidador() {
   const usuario = JSON.parse(localStorage.getItem("data_user"));
@@ -50,8 +50,30 @@ export default function TiendaCuidador() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleEliminar = (id) => {
+  const handleEliminar = async (id) => {
     console.log(id);
+    let res = await Service.deleteProduct(id);
+    if (res.status === 200) {
+      toast.success("Producto eliminado exitosamente", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      obtProducts();
+    } else {
+      toast.error("Error al eliminar el producto", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+
   };
 
   const handleEditar = async (idActual) => {
@@ -214,7 +236,7 @@ export default function TiendaCuidador() {
                           </button>
                           <button
                             className="text-white bg-red-700 hover:bg-red-900 transition duration-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                            onClick={() => handleEliminar(1)}
+                            onClick={() => handleEliminar(product._id)}
                           >
                             Eliminar
                           </button>
