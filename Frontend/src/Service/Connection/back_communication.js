@@ -148,3 +148,35 @@ export const deleteReview = async (id) => {
     const response = await instance.delete(`review/delete/${id}`);
     return response;
 }
+
+// Crear Producto
+export const createProduct = async (data) => {
+    const response = await instance.post(`product/create`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+// Obtener Productos
+export const getProducts = async () => {
+    const response = await instance.get(`product/products`);
+    return response;
+}
+
+// Obtener Un Producto
+export const getProduct = async (id) => {
+    const response = await instance.get(`product/${id}`);
+    return response;
+}
+
+// Actualizar Producto
+export const updateProduct = async (id, data) => {
+    const response = await instance.patch(`product/update/${id}`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}

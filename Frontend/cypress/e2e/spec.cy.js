@@ -65,7 +65,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     //cy.wait(500);
-    cy.visit('/user/profilePet');
+    cy.visit('/user/profilepet');
 
     // Ingreso de datos Correctos
     cy.get('[data-test-id="cypress-input-petName"]').as('namePet');
@@ -168,7 +168,7 @@ describe('Test4 - Crear Review', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     //cy.wait(500);
-    cy.visit('/user/resenia');
+    cy.visit('/user/reviews');
 
     cy.get('[data-test-id="cypress-review-comment"]').as('review');
     cy.get('#data-test-id').as('stars');
@@ -194,16 +194,123 @@ describe('Test4 - Crear Review', () => {
 }
 )
 
-describe('Test5 - Devolver Mascota', () => {
+describe('Test5 - Crear Producto Erróneo', () => {
   it('passes', () => {
-    
+    // Inicio de Sesión
+    cy.visit('/');
+    cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-email-login"]').as('loginEmail');
+    cy.get('[data-test-id="cypress-password-login"]').as('loginPassword');
+
+    // Ingreso de datos Correctos
+    cy.get('@loginEmail').type('paxelar971@arensus.com');
+    cy.get('@loginPassword').type('Password01');
+    //cy.wait(500);
+    cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
+
+    // Click en el botón de Iniciar Sesión
+    cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
+    cy.get('@loginButton').click();
+
+    cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
+
+    cy.visit('/petcare/store');
+    cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
+
+    cy.get('@createProductButton').click();
+    cy.get('[data-test-id="cypress-input-name"]').as('productName');
+    cy.get('[data-test-id="cypress-input-image"]').as('productImage');
+    cy.get('[data-test-id="cypress-input-price"]').as('productPrice');
+    cy.get('[data-test-id="cypress-input-quantity"]').as('productStock');
+    cy.get('[data-test-id="cypress-input-description"]').as('productDescription');
+    cy.get('[data-test-id="cypress-button-addProduct"]').as('addProductButton');
+    cy.intercept('POST', '/product/create').as('createProduct');
+
+    cy.get('@productName').type('CypressProduct');
+    cy.get('@productDescription').type('CypressProductDescription');
+    cy.get('@productPrice').type("cien");
+    cy.get('@productStock').type("diez");
+    cy.get('@productImage').type('https://static.vecteezy.com/system/resources/previews/001/200/062/original/dog-collar-png.png');
+
+    cy.get('@addProductButton').click();
+
+    cy.wait('@createProduct').then(({ response }) => {
+      expect(response.headers['content-type'].includes('application/json')).to.be.true;
+      expect(response.statusCode).to.eq(400);
+    })
   })
 }
 )
 
 describe('Test6 - Crear Producto', () => {
   it('passes', () => {
-    
+    // Inicio de Sesión
+    cy.visit('/');
+    cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-email-login"]').as('loginEmail');
+    cy.get('[data-test-id="cypress-password-login"]').as('loginPassword');
+
+    // Ingreso de datos Correctos
+    cy.get('@loginEmail').type('paxelar971@arensus.com');
+    cy.get('@loginPassword').type('Password01');
+    //cy.wait(500);
+    cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
+
+    // Click en el botón de Iniciar Sesión
+    cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
+    cy.get('@loginButton').click();
+
+    cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
+
+    cy.visit('/petcare/store');
+    cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
+
+    cy.get('@createProductButton').click();
+    cy.get('[data-test-id="cypress-input-name"]').as('productName');
+    cy.get('[data-test-id="cypress-input-image"]').as('productImage');
+    cy.get('[data-test-id="cypress-input-price"]').as('productPrice');
+    cy.get('[data-test-id="cypress-input-quantity"]').as('productStock');
+    cy.get('[data-test-id="cypress-input-description"]').as('productDescription');
+    cy.get('[data-test-id="cypress-button-addProduct"]').as('addProductButton');
+    cy.intercept('POST', '/product/create').as('createProduct');
+
+    cy.get('@productName').type('CypressProduct');
+    cy.get('@productDescription').type('CypressProductDescription');
+    cy.get('@productPrice').type(100);
+    cy.get('@productStock').type(10);
+    cy.get('@productImage').type('https://static.vecteezy.com/system/resources/previews/001/200/062/original/dog-collar-png.png');
+
+    cy.get('@addProductButton').click();
+
+    cy.wait('@createProduct').then(({ response }) => {
+      expect(response.headers['content-type'].includes('application/json')).to.be.true;
+      expect(response.statusCode).to.eq(200);
+    })
+  })
+}
+)
+
+describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => {
+  it('passes', () => {
+    // Inicio de Sesión
+    cy.visit('/');
+    cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-email-login"]').as('loginEmail');
+    cy.get('[data-test-id="cypress-password-login"]').as('loginPassword');
+
+    // Ingreso de datos Correctos
+    cy.get('@loginEmail').type('bejiro5828@anawalls.com');
+    cy.get('@loginPassword').type('Password01');
+    //cy.wait(500);
+    cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
+
+    // Click en el botón de Iniciar Sesión
+    cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
+    cy.get('@loginButton').click();
+    //cy.wait(500);
+    cy.visit('/petcare/profile');
+
+    cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
   })
 }
 )
