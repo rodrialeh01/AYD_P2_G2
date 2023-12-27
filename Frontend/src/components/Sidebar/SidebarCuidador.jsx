@@ -21,26 +21,31 @@ const SidebarCuidador = () => {
     const Menus = [
         {
             name: "Mi Perfil",
+            nameCypress: "cypress-sidebar-miPerfil",
             icon: <FaUserLarge className="text-3xl"/>,
             path: "/petcare/profile",
         },
         {
             name: "Mascotas Hospedadas",
+            nameCypress: "cypress-sidebar-mascotasHospedadas",
             icon: <GiDogHouse className="text-3xl"/>,
             path: "/petcare/pets",
         },
         {
             name: "Atención a Mascotas",
+            nameCypress: "cypress-sidebar-atencionMascotas",
             icon: <SiDatadog className="text-3xl"/>,
             path: "/petcare/atention",
         },
         {
             name: "Tienda",
+            nameCypress: "cypress-sidebar-tienda",
             icon: <FaStore className="text-3xl"/>,
             path: "/petcare/store",
         },
         {
             name: "Reseñas",
+            nameCypress: "cypress-sidebar-review",
             icon: <FiMessageCircle className="text-3xl"/>,
             path: "/petcare/reviews",
         }
@@ -74,7 +79,8 @@ const SidebarCuidador = () => {
                 </div>
                 <ul>
                     {Menus.map((item, index) => (
-                        <li key={index} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`} onClick={() => handlerGoTo(item.path)}>
+                        <li key={index} className={`text-zinc-700 text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-verde2 rounded-md`} data-test-id={`${item.nameCypress}`}
+                         onClick={() => handlerGoTo(item.path)}>
                             <div className={`${!open ? 'mr-4' : ''}`}>{item.icon}</div>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{item.name}</span>
                         </li>
