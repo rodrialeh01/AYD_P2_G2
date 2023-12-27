@@ -18,11 +18,11 @@ jobs:
           node-version: 20
     
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Frontend
       
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Backend  
 
   verificacion:
@@ -38,7 +38,7 @@ jobs:
           node-version: 20
     
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Frontend
 
       - name: Lint Frontend
@@ -46,7 +46,7 @@ jobs:
         working-directory: Frontend
 
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Backend
 
       - name: Lint Backend
@@ -66,7 +66,7 @@ jobs:
           node-version: 20
     
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Frontend
 
       - name: Build Frontend
@@ -74,7 +74,7 @@ jobs:
         working-directory: Frontend
 
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Backend
 
       - name: Build Backend
@@ -94,11 +94,11 @@ jobs:
           node-version: 20
       
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Frontend
       
       - name: Instalando dependencias
-        run: npm install
+        run: npm ci
         working-directory: Backend
 
       - name: Levantando servidor
