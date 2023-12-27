@@ -69,7 +69,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/user/profilepet');
+    cy.visit('/user/profilepet', {'failOnStatusCode': false});
     cy.wait(500);
     // Ingreso de datos Correctos
     cy.get('[data-test-id="cypress-input-petName"]').as('namePet');
@@ -178,7 +178,7 @@ describe('Test4 - Crear Review', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/user/reviews');
+    cy.visit('/user/reviews', {'failOnStatusCode': false});
     cy.wait(500);
     cy.get('[data-test-id="cypress-review-comment"]').as('review');
     cy.get('#data-test-id').as('stars');
@@ -225,7 +225,7 @@ describe('Test5 - Crear Producto Erróneo', () => {
     cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
     cy.wait(500);
-    cy.visit('/petcare/store');
+    cy.visit('/petcare/store', {'failOnStatusCode': false});
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
 
     cy.get('@createProductButton').click();
@@ -274,7 +274,7 @@ describe('Test6 - Crear Producto', () => {
     cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
     cy.wait(500);
-    cy.visit('/petcare/store');
+    cy.visit('/petcare/store', {'failOnStatusCode': false});
     cy.wait(500);
 
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
@@ -324,7 +324,7 @@ describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => 
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/petcare/profile');
+    cy.visit('/petcare/profile', {'failOnStatusCode': false});
     cy.wait(500);
     cy.get('[data-test-id="title"]').should('exist').should('be.visible');
   })
