@@ -1,4 +1,4 @@
-/*describe('Test1 - Login Correcto', () => {
+describe('Test1 - Login Correcto', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -21,8 +21,8 @@
 
   })
 })
-*/
-/*describe('Test2 - Login Incorrecto', () => {
+
+describe('Test2 - Login Incorrecto', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -49,7 +49,7 @@
       expect(response.statusCode).to.eq(400);
     })
   })
-})*/
+})
 
 describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
   it('passes', () => {
@@ -164,7 +164,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
 }
 )
 
-/*describe('Test4 - Crear Review', () => {
+describe('Test4 - Crear Review', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -182,7 +182,13 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/user/reviews', {'failOnStatusCode': false});
+
+    cy.get('[data-test-id="title"]').should('exist').should('be.visible');
+    cy.wait(500);
+
+    cy.get('[data-test-id="cypress-sidebar-review"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-review"]').click();
+    //cy.visit('/user/reviews', {'failOnStatusCode': false});
     cy.wait(500);
     cy.get('[data-test-id="cypress-review-comment"]').as('review');
     cy.get('#data-test-id').as('stars');
@@ -202,13 +208,11 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
     })
-
-
   })
 }
-)*/
+)
 
-/*describe('Test5 - Crear Producto Erróneo', () => {
+describe('Test5 - Crear Producto Erróneo', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -229,7 +233,12 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
     cy.wait(500);
-    cy.visit('/petcare/store', {'failOnStatusCode': false});
+
+
+    cy.get('[data-test-id="cypress-sidebar-tienda"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-tienda"]').click();
+    cy.wait(500);
+    //cy.visit('/petcare/store', {'failOnStatusCode': false});
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
 
     cy.get('@createProductButton').click();
@@ -258,7 +267,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
 }
 )
 
-describe('Test6 - Crear Producto', () => {
+describe('Test6 - Crear Producto Correctamente', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -278,7 +287,11 @@ describe('Test6 - Crear Producto', () => {
     cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
     cy.wait(500);
-    cy.visit('/petcare/store', {'failOnStatusCode': false});
+
+    cy.get('[data-test-id="cypress-sidebar-tienda"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-tienda"]').click();
+
+    //cy.visit('/petcare/store', {'failOnStatusCode': false});
     cy.wait(500);
 
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
@@ -310,7 +323,7 @@ describe('Test6 - Crear Producto', () => {
 }
 )
 
-describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => {
+describe('Test7 - No Crear Review vacía', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -328,10 +341,32 @@ describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => 
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/petcare/profile', {'failOnStatusCode': false});
-    cy.wait(500);
+
     cy.get('[data-test-id="title"]').should('exist').should('be.visible');
+    cy.wait(500);
+
+    cy.get('[data-test-id="cypress-sidebar-review"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-review"]').click();
+    //cy.visit('/user/reviews', {'failOnStatusCode': false});
+    cy.wait(500);
+    cy.get('[data-test-id="cypress-review-comment"]').as('review');
+    cy.get('#data-test-id').as('stars');
+    cy.get('@stars').type('3');
+
+    //cy.get('@review').type('Cypress - Test -No debió crear esta reseña');
+    cy.get('@review').invoke('val').should('be.empty');
+
+    cy.get('[data-test-id="cypress-review-submit"]').as('submitButton');
+    cy.get('@submitButton').should('be.enabled');
+    cy.wait(500);
+    cy.intercept('POST', '/review/create').as('CreateReview');
+    cy.wait(500);
+    cy.get('@submitButton').click();
+    cy.wait(500);
+    cy.wait('@CreateReview').then(({ response }) => {
+      expect(response.headers['content-type'].includes('application/json')).to.be.true;
+      expect(response.statusCode).to.eq(400);
+    })
   })
 }
 )
-*/

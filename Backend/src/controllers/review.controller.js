@@ -8,6 +8,7 @@ export const createReview = async (req, res) => {
 
         if(!idUser || !comment || !qualification) {
             res.response(null, 'All fields are required', 400);
+            return;
         }
 
         Review.create({

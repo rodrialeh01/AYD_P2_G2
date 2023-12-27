@@ -104,8 +104,9 @@ export default function Resenia() {
           pauseOnHover: true,
           draggable: true,
         });
-
+        
         return;
+        
       }
 
       reviewData.idUser = JSON.parse(localStorage.getItem("data_user")).id;
@@ -124,7 +125,7 @@ export default function Resenia() {
         setResponse("review");
       }
     } catch (error) {
-      toast.error("Error al crear la reseña", {
+      toast.error("Error al crear la reseña - Revise que haya llenado todos los campos", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
