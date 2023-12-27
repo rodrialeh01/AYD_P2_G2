@@ -45,14 +45,39 @@ jobs:
         run: npm install
         working-directory: Backend
 
+      - name: Levantando servidor
+        run: npm run dev
+        working-directory: Backend
+        env:
+          API_PORT: ${{secrets.API_PORT}}
+          DATABASE: ${{secrets.DATABASE}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+          DB_PORT: ${{secrets.DB_PORT}}
+          DB_USER: ${{secrets.DB_USER}}
+          MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
+          MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
+          OAUTH_CLIENTID: ${{secrets.OAUTH_CLIENTID}}
+          OAUTH_CLIENT_SECRET: ${{secrets.OAUTH_CLIENT_SECRET}}
+          OAUTH_REFRESH_TOKEN: ${{secrets.OAUTH_REFRESH_TOKEN}}
+
+      - name: Levantando Frontend
+        run: npm run dev
+        working-directory: Frontend
+
       - name: Pruebas E2E
         uses: cypress-io/github-action@v2
         with:
           command: npm run teste2e
           working-directory: Frontend
-        
-
       
+      - name: Terminar servidor
+        run:  kill -9 $(lsof -t -i:${{secrets.API_PORT}})
+        working-directory: Backend 
+
+      - name: Terminar Frontend
+        run:  kill -9 $(lsof -t -i:${{secrets.FRONTEND_PORT}})
+        working-directory: Frontend       
 
   verificacion:
     needs: pruebas
