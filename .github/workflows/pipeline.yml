@@ -73,11 +73,7 @@ jobs:
       
       - name: Terminar servidor
         run:  kill -9 $(lsof -t -i:${{secrets.API_PORT}})
-        working-directory: Backend 
-
-      - name: Terminar Frontend
-        run:  kill -9 $(lsof -t -i:${{secrets.FRONTEND_PORT}})
-        working-directory: Frontend       
+        working-directory: Backend  
 
   verificacion:
     needs: pruebas
