@@ -62,7 +62,7 @@ jobs:
           OAUTH_REFRESH_TOKEN: ${{secrets.OAUTH_REFRESH_TOKEN}}
 
       - name: Levantando Frontend
-        run: npm run build
+        run: npm run dev &
         working-directory: Frontend
 
       - name: Pruebas E2E
@@ -73,7 +73,11 @@ jobs:
       
       - name: Terminar servidor
         run:  kill -9 $(lsof -t -i:${{secrets.API_PORT}})
-        working-directory: Backend  
+        working-directory: Backend 
+
+      - name: Terminar Frontend
+        run:  kill -9 $(lsof -t -i:5173)
+        working-directory: Frontend       
 
   verificacion:
     needs: pruebas
