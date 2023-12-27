@@ -69,7 +69,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           command: npm run teste2e
-          working-directory: dist
+          working-directory: Frontend
       
       - name: Terminar servidor
         run:  kill -9 $(lsof -t -i:${{secrets.API_PORT}})
