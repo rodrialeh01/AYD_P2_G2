@@ -48,20 +48,20 @@ export default function Login() {
         setLogged(true);
         toast.success("Inicio de sesión exitoso", {
           position: "bottom-right",
-          autoClose: 5000,
+          autoClose: 500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
         });
-        setTimeout(() => {
+       // setTimeout(() => {
           if (res.data.data.role === 0) {
             navigate("/petcare/profile");
           } else {
             navigate("/user/profile");
           }
-        }, 3000);
+        //}, 500);
       } else {
         toast.error(res.data.message);
       }
