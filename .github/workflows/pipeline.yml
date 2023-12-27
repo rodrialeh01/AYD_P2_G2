@@ -46,7 +46,7 @@ jobs:
         working-directory: Backend
 
       - name: Levantando servidor
-        run: npm run dev
+        run: npm run dev &
         working-directory: Backend
         env:
           API_PORT: ${{secrets.API_PORT}}
@@ -62,7 +62,7 @@ jobs:
           OAUTH_REFRESH_TOKEN: ${{secrets.OAUTH_REFRESH_TOKEN}}
 
       - name: Levantando Frontend
-        run: npm run dev
+        run: npm run dev &
         working-directory: Frontend
 
       - name: Pruebas E2E
