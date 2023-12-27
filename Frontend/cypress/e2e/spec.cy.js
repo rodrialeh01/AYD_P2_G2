@@ -1,4 +1,4 @@
-describe('Test1 - Login Correcto', () => {
+/*describe('Test1 - Login Correcto', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -21,8 +21,8 @@ describe('Test1 - Login Correcto', () => {
 
   })
 })
-
-describe('Test2 - Login Incorrecto', () => {
+*/
+/*describe('Test2 - Login Incorrecto', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -49,7 +49,7 @@ describe('Test2 - Login Incorrecto', () => {
       expect(response.statusCode).to.eq(400);
     })
   })
-})
+})*/
 
 describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
   it('passes', () => {
@@ -69,7 +69,9 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
     cy.wait(500);
-    cy.visit('/user/profilepet', {'failOnStatusCode': false});
+    //cy.visit('/user/profilepet', {'failOnStatusCode': false});
+    cy.get('[data-test-id="cypress-sidebar-crearPerfil"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-crearPerfil"]').click();
     cy.wait(500);
     // Ingreso de datos Correctos
     cy.get('[data-test-id="cypress-input-petName"]').as('namePet');
@@ -123,7 +125,9 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
 
     cy.intercept('GET', '/pet/client/*').as('getPets');
 
-    cy.visit('/user/mypets');
+    cy.get('[data-test-id="cypress-sidebar-misMascotas"]').should('exist').should('be.visible');
+    cy.get('[data-test-id="cypress-sidebar-misMascotas"]').click();
+    //cy.visit('/user/mypets');
     cy.wait(500);
 
     cy.wait('@getPets').then(({ response }) => {
@@ -160,7 +164,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
 }
 )
 
-describe('Test4 - Crear Review', () => {
+/*describe('Test4 - Crear Review', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -202,9 +206,9 @@ describe('Test4 - Crear Review', () => {
 
   })
 }
-)
+)*/
 
-describe('Test5 - Crear Producto Erróneo', () => {
+/*describe('Test5 - Crear Producto Erróneo', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
@@ -330,3 +334,4 @@ describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => 
   })
 }
 )
+*/

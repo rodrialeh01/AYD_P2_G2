@@ -19,26 +19,31 @@ const SidebarCliente = () => {
     const Menus = [
         {
             name: "Mi Perfil",
+            cypressName: "cypress-sidebar-miPerfil",
             icon: <FaUserLarge className="text-3xl"/>,
             path: "/user/profile",
         },
         {
             name: "Crear Perfil de mi Mascota",
+            cypressName: "cypress-sidebar-crearPerfil",
             icon: <FaShieldDog className="text-3xl"/>,
             path: "/user/profilepet",
         },
         {
             name: "Mis Mascotas",
+            cypressName: "cypress-sidebar-misMascotas",
             icon: <MdPets className="text-3xl"/>,
             path: "/user/mypets",
         },
         {
             name: "Tienda",
+            cypressName: "cypress-sidebar-tienda",
             icon: <FaStore className="text-3xl"/>,
             path: "/user/store",
         },
         {
             name: "Reseñas",
+            cypressName: "cypress-sidebar-review",
             icon: <FiMessageCircle className="text-3xl"/>,
             path: "/user/reviews",
         }
@@ -72,7 +77,7 @@ const SidebarCliente = () => {
                 </div>
                 <ul>
                     {Menus.map((item, index) => (
-                        <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-azul3 rounded-md`} onClick={() => handlerGoTo(item.path)}>
+                        <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer pt-2 mt-2 pb-2 mb-2 hover:bg-azul3 rounded-md` } data-test-id={`${item.cypressName}`} onClick={() => handlerGoTo(item.path)}>
                             <div className={`${!open ? 'mr-4' : ''}`}>{item.icon}</div>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{item.name}</span>
                         </li>
