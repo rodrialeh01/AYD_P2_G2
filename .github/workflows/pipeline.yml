@@ -66,8 +66,10 @@ jobs:
         working-directory: Frontend
 
       - name: Pruebas E2E
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v6
         with:
+          build: npm run build
+          start: npm start
           command: npm run teste2e
           working-directory: Frontend
       
