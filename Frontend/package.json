@@ -9,11 +9,13 @@
     "cypress:open": "cypress open",
     "preview": "vite preview",
     "eslint": "eslint . --ext js,jsx --fix",
+    "start-test": "node app.js",
     "teste2e": "npx cypress run"
   },
   "dependencies": {
     "@smastrom/react-rating": "^1.4.0",
     "axios": "^1.6.2",
+    "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
