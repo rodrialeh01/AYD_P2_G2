@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  install-dependencies:
+  compilacion:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -25,8 +25,37 @@ jobs:
         run: npm install
         working-directory: Backend
 
-  lint:
-    needs: install-dependencies
+  pruebas:
+    needs: compilacion
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Instalando dependencias
+        run: npm install
+        working-directory: Frontend
+      
+      - name: Instalando dependencias
+        run: npm install
+        working-directory: Backend
+
+      - name: Pruebas E2E
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run teste2e
+          working-directory: Frontend
+        
+
+      
+
+  verificacion:
+    needs: pruebas
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -53,8 +82,8 @@ jobs:
         run: npm run eslint
         working-directory: Backend
 
-  build:
-    needs: install-dependencies
+  implementacion:
+    needs: verificacion
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

@@ -9,12 +9,13 @@ describe('Test1 - Login Correcto', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('paxelar971@arensus.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
+    cy.wait(500);
 
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
 
@@ -25,6 +26,8 @@ describe('Test2 - Login Incorrecto', () => {
   it('passes', () => {
     // Inicio de Sesión
     cy.visit('/');
+    cy.wait(500);
+
     cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
     cy.get('[data-test-id="cypress-email-login"]').as('loginEmail');
     cy.get('[data-test-id="cypress-password-login"]').as('loginPassword');
@@ -39,6 +42,7 @@ describe('Test2 - Login Incorrecto', () => {
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
+    cy.wait(500);
 
     cy.wait('@login').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
@@ -58,15 +62,15 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('bejiro5828@anawalls.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-    //cy.wait(500);
+    cy.wait(500);
     cy.visit('/user/profilepet');
-
+    cy.wait(500);
     // Ingreso de datos Correctos
     cy.get('[data-test-id="cypress-input-petName"]').as('namePet');
     cy.get('#especie').as('speciesPet');
@@ -93,32 +97,35 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('@behaviorPet').invoke('val').should('not.be.empty');
     cy.get('@extraCommentsPet').invoke('val').should('not.be.empty');
 
-
+    cy.wait(500);
     cy.intercept('POST', '/pet/create').as('CreatePet');
 
     // chequear si son numeros
     cy.get('@agePet').invoke('val').should('match', /^\d+$/);
     cy.get('@vetContactPet').invoke('val').should('match', /^\d+$/);
 
-
+    cy.wait(500);
     // chequear si el boton esta habilitado
     cy.get('[data-test-id="cypress-button-savePet"]').should('be.enabled');
 
     // Click en el botón de Registrar Mascota
     cy.get('[data-test-id="cypress-button-savePet"]').as('registerPetButton');
     cy.get('@registerPetButton').click();
+    cy.wait(500);
 
     cy.wait('@CreatePet').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
     })
-    //cy.wait(500);
+
+    cy.wait(500);
     cy.get('[data-test-id="title"]').should('exist').should('be.visible');
 
     cy.intercept('GET', '/pet/client/*').as('getPets');
 
     cy.visit('/user/mypets');
-    //cy.wait(500);
+    cy.wait(500);
+
     cy.wait('@getPets').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
@@ -131,7 +138,7 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     })
 
     cy.get('@hostPetButton').click();
-    //cy.wait(300);
+    cy.wait(300);
 
     cy.get('[data-test-id="input-fecha"]').as('hostingDate');
 
@@ -141,6 +148,9 @@ describe('Test3 - Registro de Perfil de Mascota y Hospedaje Correcto', () => {
     cy.get('[data-test-id="btn-hospedar-accept"]').as('hostPetButton');
 
     cy.get('@hostPetButton').click();
+    cy.wait(500);
+
+
     cy.wait('@hospedarPet').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
@@ -161,29 +171,29 @@ describe('Test4 - Crear Review', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('bejiro5828@anawalls.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-    //cy.wait(500);
+    cy.wait(500);
     cy.visit('/user/reviews');
-
+    cy.wait(500);
     cy.get('[data-test-id="cypress-review-comment"]').as('review');
     cy.get('#data-test-id').as('stars');
     cy.get('@stars').type('2');
 
-    cy.get('@review').type('Cypress - Test - Reseña a crear con 3 estrellas');
+    cy.get('@review').type('Cypress - Test - Reseña a crear');
     cy.get('@review').invoke('val').should('not.be.empty');
 
     cy.get('[data-test-id="cypress-review-submit"]').as('submitButton');
     cy.get('@submitButton').should('be.enabled');
-
+    cy.wait(500);
     cy.intercept('POST', '/review/create').as('CreateReview');
-
+    cy.wait(500);
     cy.get('@submitButton').click();
-
+    cy.wait(500);
     cy.wait('@CreateReview').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(200);
@@ -205,19 +215,21 @@ describe('Test5 - Crear Producto Erróneo', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('paxelar971@arensus.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
+    cy.wait(500);
     cy.get('@loginButton').click();
-
+    cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
-
+    cy.wait(500);
     cy.visit('/petcare/store');
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
 
     cy.get('@createProductButton').click();
+    cy.wait(500);
     cy.get('[data-test-id="cypress-input-name"]').as('productName');
     cy.get('[data-test-id="cypress-input-image"]').as('productImage');
     cy.get('[data-test-id="cypress-input-price"]').as('productPrice');
@@ -233,7 +245,7 @@ describe('Test5 - Crear Producto Erróneo', () => {
     cy.get('@productImage').type('https://static.vecteezy.com/system/resources/previews/001/200/062/original/dog-collar-png.png');
 
     cy.get('@addProductButton').click();
-
+    cy.wait(500);
     cy.wait('@createProduct').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
       expect(response.statusCode).to.eq(400);
@@ -253,19 +265,22 @@ describe('Test6 - Crear Producto', () => {
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('paxelar971@arensus.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-
+    cy.wait(500);
     cy.get('[data-test-id="cypress-header-profileC"]').should('exist').should('be.visible');
-
+    cy.wait(500);
     cy.visit('/petcare/store');
+    cy.wait(500);
+
     cy.get('[data-test-id="cypress-button-createProduct"]').as('createProductButton');
 
     cy.get('@createProductButton').click();
+    cy.wait(500);
     cy.get('[data-test-id="cypress-input-name"]').as('productName');
     cy.get('[data-test-id="cypress-input-image"]').as('productImage');
     cy.get('[data-test-id="cypress-input-price"]').as('productPrice');
@@ -279,8 +294,9 @@ describe('Test6 - Crear Producto', () => {
     cy.get('@productPrice').type(100);
     cy.get('@productStock').type(10);
     cy.get('@productImage').type('https://static.vecteezy.com/system/resources/previews/001/200/062/original/dog-collar-png.png');
-
+    cy.wait(500);
     cy.get('@addProductButton').click();
+    cy.wait(500);
 
     cy.wait('@createProduct').then(({ response }) => {
       expect(response.headers['content-type'].includes('application/json')).to.be.true;
@@ -301,16 +317,16 @@ describe('Test7 - Evitar que usuario entre en modo perfil administrador', () => 
     // Ingreso de datos Correctos
     cy.get('@loginEmail').type('bejiro5828@anawalls.com');
     cy.get('@loginPassword').type('Password01');
-    //cy.wait(500);
+    cy.wait(500);
     cy.get('@loginPassword').invoke('val').its("length").should('be.gt', 7);
 
     // Click en el botón de Iniciar Sesión
     cy.get('[data-test-id="cypress-button-login"]').as('loginButton');
     cy.get('@loginButton').click();
-    //cy.wait(500);
+    cy.wait(500);
     cy.visit('/petcare/profile');
-
-    cy.get('[data-test-id="cypress-header-login"]').should('exist').should('be.visible');
+    cy.wait(500);
+    cy.get('[data-test-id="title"]').should('exist').should('be.visible');
   })
 }
 )

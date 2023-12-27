@@ -8,7 +8,8 @@
     "build": "vite build",
     "cypress:open": "cypress open",
     "preview": "vite preview",
-    "eslint": "eslint . --ext js,jsx --fix"
+    "eslint": "eslint . --ext js,jsx --fix",
+    "teste2e": "npx cypress run"
   },
   "dependencies": {
     "@smastrom/react-rating": "^1.4.0",
