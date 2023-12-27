@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Service from "../../Service/Service";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../userCtx/User.jsx";
 import "./Login.css";
 
@@ -49,20 +48,20 @@ export default function Login() {
         setLogged(true);
         toast.success("Inicio de sesión exitoso", {
           position: "bottom-right",
-          autoClose: 5000,
+          autoClose: 500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
         });
-        setTimeout(() => {
+       // setTimeout(() => {
           if (res.data.data.role === 0) {
             navigate("/petcare/profile");
           } else {
             navigate("/user/profile");
           }
-        }, 3000);
+        //}, 500);
       } else {
         toast.error(res.data.message);
       }
@@ -99,12 +98,13 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="mt-12 flex flex-col items-center">
-                  <h1 className="text-2xl xl:text-3xl font-bold">
+                  <h1 className="text-2xl xl:text-3xl font-bold" data-test-id="cypress-header-login">
                     Inicia Sesión
                   </h1>
                   <div className="w-full flex-1 mt-8">
                     <div className="mx-auto max-w-xs">
                       <input
+                        data-test-id="cypress-email-login"
                         className="w-full px-8 py-4 rounded-lg font-medium text-black bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                         type="email"
                         placeholder="Email"
@@ -114,6 +114,7 @@ export default function Login() {
                       />
                       <input
                         className="w-full px-8 mt-5 py-4 rounded-lg font-medium text-black bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                        data-test-id="cypress-password-login"
                         type="password"
                         placeholder="Contraseña"
                         id="pass_user"
@@ -123,6 +124,7 @@ export default function Login() {
                       <button
                         className="mt-5 tracking-wide font-semibold bg-verde3 text-black w-full py-4 rounded-lg hover:bg-verde4 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                         type="button"
+                        data-test-id="cypress-button-login"
                         onClick={(e) => handleSubmit(e)}
                       >
                         <span className="ml-3">Iniciar Sesión</span>

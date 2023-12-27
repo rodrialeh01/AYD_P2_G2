@@ -106,3 +106,83 @@ export const updateStatus = async (data) => {
     });
     return response;
 }
+
+//Devolver mascota
+export const returnPet = async (id) => {
+    const response = await instance.post(`/pet/devolver/${id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+//Recoger mascota
+export const pickPet = async (id) => {
+    const response = await instance.post(`/pet/recoger/${id}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+// Obtener reseñas
+export const getReviews = async () => {
+    const response = await instance.get(`review/reviews`);
+    return response;
+}
+
+// Crear reseña
+export const createReview = async (data) => {
+    const response = await instance.post(`review/create`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+// Eliminar reseña
+export const deleteReview = async (id) => {
+    const response = await instance.delete(`review/delete/${id}`);
+    return response;
+}
+
+// Crear Producto
+export const createProduct = async (data) => {
+    const response = await instance.post(`product/create`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+// Obtener Productos
+export const getProducts = async () => {
+    const response = await instance.get(`product/products`);
+    return response;
+}
+
+// Obtener Un Producto
+export const getProduct = async (id) => {
+    const response = await instance.get(`product/${id}`);
+    return response;
+}
+
+// Actualizar Producto
+export const updateProduct = async (id, data) => {
+    const response = await instance.patch(`product/update/${id}`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+//Eliminar un producto
+export const deleteProduct = async (id) => {
+    const response = await instance.delete(`product/delete/${id}`);
+    return response;
+}
