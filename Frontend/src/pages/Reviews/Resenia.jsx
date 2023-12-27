@@ -95,6 +95,19 @@ export default function Resenia() {
     event.preventDefault();
     console.log(reviewData);
     try {
+      if (reviewData.qualification === 0) {
+        toast.error("Calificación no válida - Tiene que ser mayor a 0 ", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        return;
+      }
+
       reviewData.idUser = JSON.parse(localStorage.getItem("data_user")).id;
 
       const res = await Service.createReview(reviewData);
